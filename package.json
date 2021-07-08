@@ -1,0 +1,32 @@
+{
+  "name": "tlog",
+  "version": "0.0.1",
+  "description": "tycrek's custom logger library",
+  "main": "index.js",
+  "engines": {
+    "node": "^14.x.x",
+    "npm": "^7.x.x"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": "github:tycrek/tlog",
+  "keywords": [
+    "log",
+    "logger",
+    "logging",
+    "logging-library"
+  ],
+  "author": "tycrek <t@tycrek.com> (https://tycrek.com/)",
+  "license": "ISC",
+  "bugs": "https://github.com/tycrek/tlog/issues",
+  "homepage": "https://github.com/tycrek/tlog#readme",
+  "funding": {
+    "type": "patreon",
+    "url": "https://patreon.com/tycrek"
+  },
+  "dependencies": {
+    "luxon": "^1.27.0",
+    "node-color-log": "^5.3.1"
+  }
+}
