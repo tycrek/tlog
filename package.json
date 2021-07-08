@@ -1,5 +1,5 @@
 {
-  "name": "tlog",
+  "name": "@tycrek/log",
   "version": "0.0.1",
   "description": "tycrek's custom logger library",
   "main": "index.js",
