@@ -52,7 +52,7 @@ const T1 = {
 //#endregion
 
 // Since you create a new instance of TLog, you can create multiple loggers for different contexts
-const TLog = require('./tlog');
+const TLog = require('../tlog');
 const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
 // const logger = new TLog(); // Use default settings
 
