@@ -112,31 +112,62 @@ Levels can be one of:
 | `message` | The message of the log |
 | `extra` | Any extra data to be printed with the log |
 
-### `logger.comment(message)`
+### Utility logs
+
+I wrote these utility methods to make certain things quicker to debug, depending what it is I was debugging. Especially helpful when combined with chaining.
+#### `logger.comment(message)`
 
 Prints a comment-style log.
 
-### `logger.typeof(object, title)`
+#### `logger.typeof(object, title)`
 
 Prints the type of the specified object. Title is optional, defaults to `'Typeof'`.
 
-### `logger.epoch()`
+#### `logger.epoch()`
 
 Prints the current Unix epoch in milliseconds.
 
-### `logger.isTTY()`
+#### `logger.isTTY()`
 
 Prints if the current console is a TTY.
 
-### `logger.blank()`
+#### `logger.windowSize()`
+
+Prints the terminal size, in columns & rows.
+
+#### `logger.pid()`
+
+Prints the current process ID.
+
+#### `logger.cwd()`
+
+Prints the current working directory.
+
+#### `logger.node()`
+
+Prints the Node.js version.
+
+#### `logger.argv()`
+
+Prints the command line arguments.
+
+#### `logger.env()`
+
+Prints the environment variables.
+
+### Invisible utility logs
+
+These methods mostly write certain whitespace to `stdout`, to allow for easy debugging.
+
+#### `logger.blank()`
 
 Prints a blank line.
 
-### `logger.clear()`
+#### `logger.clear()`
 
 Clears the console using Unicode escape sequences. May behave differently on different platforms.
 
-### `logger.console`
+#### `logger.console`
 
 Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).
 

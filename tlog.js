@@ -225,12 +225,13 @@ class TLog {
 	 * Prints a utility log, with colours & formatting
 	 * @param {string} title The log title
 	 * @param {string} data The log data
+	 * @param {string} [extra] The log extra (optional)
 	 * @return {TLog} This instance of TLog
 	 * @private
 	 * @chainable
 	 */
-	#utilLog(title, data) {
-		wout(chalk.white.bold(`${title}: `).concat(chalk.grey(data)));
+	#utilLog(title, data, extra) {
+		wout(chalk.white.bold(`${title}: `).concat(chalk.white(data), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
 		return this;
 	}
 
@@ -328,9 +329,10 @@ class TLog {
 	 * @return {TLog} This instance of TLog
 	 * @public
 	 * @chainable
+	 * @see {@link https://moment.github.io/luxon/api-docs/index.html#datetimetomillis}
 	 */
 	epoch() {
-		this.#utilLog('Epoch', DateTime.now().toMillis());
+		this.#utilLog('Epoch', DateTime.now().toMillis(), 'milliseconds');
 		return this;
 	}
 
@@ -339,9 +341,85 @@ class TLog {
 	 * @return {TLog} This instance of TLog
 	 * @public
 	 * @chainable
+	 * @see {@link https://nodejs.org/api/tty.html#tty_writestream_istty}
+	 * 
 	 */
 	isTTY() {
 		this.#utilLog('Is TTY', process.stdout.isTTY);
+		return this;
+	}
+
+	/**
+	 * Prints the terminal size, in columns & rows
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://nodejs.org/api/tty.html#tty_writestream_columns}
+	 * @see {@link https://nodejs.org/api/tty.html#tty_writestream_rows}
+	 */
+	windowSize() {
+		this.#utilLog('Window Size', `${process.stdout.columns} x ${process.stdout.rows}`, 'columns x rows');
+		return this;
+	}
+
+	/**
+	 * Prints the current process ID
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://nodejs.org/api/process.html#process_process_pid}
+	 */
+	pid() {
+		this.#utilLog('Process ID', process.pid);
+		return this;
+	}
+
+	/**
+	 * Prints the current working directory
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://nodejs.org/api/process.html#process_process_cwd}
+	 */
+	cwd() {
+		this.#utilLog('Current Working Directory', process.cwd());
+		return this;
+	}
+
+	/**
+	 * Prints the Node.js version
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://nodejs.org/api/process.html#process_process_version}
+	 */
+	node() {
+		this.#utilLog('Node', process.version);
+		return this;
+	}
+
+	/**
+	 * Prints the command line arguments
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://nodejs.org/api/process.html#process_process_argv}
+	 */
+	argv() {
+		this.#utilLog('Command line args', process.argv.slice(1));
+		return this;
+	}
+
+	/**
+	 * Prints the environment variables
+	 * @param {string} [key] The environment variable key to print (optional)
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://nodejs.org/api/process.html#process_process_env}
+	 */
+	env(key) {
+		this.#utilLog(key ? `env.${key}` : 'Environment variables', key ? process.env[key] : process.env);
 		return this;
 	}
 
