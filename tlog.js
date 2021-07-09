@@ -258,14 +258,14 @@ class TLog {
 	}
 
 	/**
-	 * A generic chainable log method. Acts like a console.log short-hand (but using process.stdout)
+	 * A generic chainable log method. Acts like a console.log short-hand & with a timestamp (but using process.stdout)
 	 * @param {...*} args The objects to write
 	 * @return {TLog} This instance of TLog
 	 * @public
 	 * @chainable
 	 */
 	log(...args) {
-		wout(...args);
+		wout(this.#getTimestamp(), ...args);
 		return this;
 	}
 
