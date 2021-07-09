@@ -118,6 +118,10 @@ Prints a comment-style log.
 
 Prints a blank line.
 
+### `logger.console`
+
+Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).
+
 [Chalk]: https://github.com/chalk/chalk
 [Luxon]: https://moment.github.io/luxon
 [available colours]: #available-colours
