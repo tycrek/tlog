@@ -57,7 +57,7 @@ const logger = new TLog(DEFAULTS); // Options are set via object passed to const
 // const logger = new TLog(); // Use default settings
 
 test(new TLog(DEFAULTS));
-test(new TLog(T1));
+//test(new TLog(T1));
 testBasic();
 
 function testBasic() {
@@ -118,7 +118,24 @@ function test(logger) {
 		.typeof(1.1, 'Number')
 		.typeof(process.stdout)
 		.comment('k that\'s prety cool')
-		.clear()
+		//.clear()
+		.blank()
+		.blank()
+		.info('Oh you know we got utility logs!')
+		.comment('Comments & blank lines:')
+		.blank()
+		.comment('Current Unix epoch in ms!')
+		.epoch()
+		.blank()
+		.comment('Is the terminal a TTY?')
+		.isTTY()
+		.blank()
+		.comment('A typeof logger,for your convenience!')
+		.typeof([1, 2, 3])
+		.blank()
+		.success('Hell yeah, we got some utility methods!')
+		.comment('Co-written by tycrek & GitHub CoPilot (including these docs & tests!')
+
 
 	logger.blank().blank().blank();
 }

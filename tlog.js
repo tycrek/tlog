@@ -222,6 +222,19 @@ class TLog {
 	}
 
 	/**
+	 * Prints a utility log, with colours & formatting
+	 * @param {string} title The log title
+	 * @param {string} data The log data
+	 * @return {TLog} This instance of TLog
+	 * @private
+	 * @chainable
+	 */
+	#utilLog(title, data) {
+		wout(chalk.white.bold(`${title}: `).concat(chalk.grey(data)));
+		return this;
+	}
+
+	/**
 	 * Prints a formatted debug log message
 	 * @param {string} [title] The log title (optional)
 	 * @param {string} message The log message
@@ -306,7 +319,29 @@ class TLog {
 	 */
 	typeof(obj, title = 'Typeof') {
 		const type = (Object.prototype.toString.call(obj).match(/(?<= )(.*?)(?=\])/gi) || ['Unknown'])[0];
-		C.log(chalk.white.bold(title).concat(': ', CHARS.SPACE, chalk.grey(type)));
+		this.#utilLog(title, type);
+		return this;
+	}
+
+	/**
+	 * Prints the current Unix epoch in milliseconds
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	epoch() {
+		this.#utilLog('Epoch', DateTime.now().toMillis());
+		return this;
+	}
+
+	/**
+	 * Prints if the current console is a TTY
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	isTTY() {
+		this.#utilLog('Is TTY', process.stdout.isTTY);
 		return this;
 	}
 

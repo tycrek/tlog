@@ -120,6 +120,14 @@ Prints a comment-style log.
 
 Prints the type of the specified object. Title is optional, defaults to `'Typeof'`.
 
+### `logger.epoch()`
+
+Prints the current Unix epoch in milliseconds.
+
+### `logger.isTTY()`
+
+Prints if the current console is a TTY.
+
 ### `logger.blank()`
 
 Prints a blank line.
