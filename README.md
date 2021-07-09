@@ -120,6 +120,10 @@ Prints a comment-style log.
 
 Prints a blank line.
 
+### `logger.typeof(object, title)`
+
+Prints the type of the specified object. Title is optional, defaults to `'Typeof'`.
+
 ### `logger.console`
 
 Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).

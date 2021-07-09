@@ -65,6 +65,10 @@ function testBasic() {
 	logger.info('Hello', 'This is a basic test.');
 }
 
+/**
+ * @param {TLog} logger
+ * @returns {void}
+ */
 function test(logger) {
 	// 3 parameters, only 1 is required
 	// Parameters are: title, message, extra
@@ -97,7 +101,22 @@ function test(logger) {
 		.success(title2, 'Experiment completed!', 'data saved to output file')
 		.debug('No more experiments, closing...')
 		.blank()
-		.comment('Also would like to thank GitHub CoPilot for helping write this, and thanks GitHub for inviting me to the private beta!');
+		.comment('Also would like to thank GitHub CoPilot for helping write this, and thanks GitHub for inviting me to the private beta!')
+		.blank()
+		.info('Typeof tests')
+		.typeof(title2)
+		.typeof(DEFAULTS, 'DEFAULTS')
+		.typeof(new Promise((res) => res()), 'Promise')
+		.typeof([1, 2, 3], 'Array')
+		.typeof({ a: 1, b: 2, c: 3 }, 'Object')
+		.typeof(null, 'Null')
+		.typeof(undefined, 'Undefined')
+		.typeof(true, 'Boolean')
+		.typeof(false, 'Boolean')
+		.typeof(-1, 'Number')
+		.typeof(1, 'Number')
+		.typeof(1.1, 'Number')
+		.comment('k that\'s prety cool')
 
 	logger.blank().blank().blank();
 }

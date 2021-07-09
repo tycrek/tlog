@@ -2,6 +2,8 @@ const { DateTime } = require('luxon');
 const chalk = require('chalk');
 const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
+const C = console;
+
 //#region Constants
 const CHARS = {
 	EMPTY: '',
@@ -74,14 +76,16 @@ class TLog {
 	 * @public
 	 * @static
 	 */
-	static console = console;
+	static console = C;
+	static c = C;
 
 	/**
 	 * Non-static exposed console, in case you wanted to call it from your TLog instance
 	 * @readonly
 	 * @public
 	 */
-	console = console;
+	console = C;
+	c = C;
 
 	/**
 	 * The options the logger will use
@@ -174,7 +178,7 @@ class TLog {
 	 * @chainable
 	 */
 	#log(level, title, message, extra) {
-		console.log(
+		C.log(
 			this.#getTimestamp() +
 			this.#getLabel(level) +
 			this.#getTitle(level, title, message) +
@@ -254,7 +258,7 @@ class TLog {
 	 * @chainable
 	 */
 	comment(message) {
-		console.log(chalk[this.#options.comments.colour](`${this.#options.comments.char} ${message}`));
+		C.log(chalk[this.#options.comments.colour](`${this.#options.comments.char} ${message}`));
 		return this;
 	}
 
@@ -265,7 +269,21 @@ class TLog {
 	 * @chainable
 	 */
 	blank() {
-		console.log('');
+		C.log('');
+		return this;
+	}
+
+	/**
+	 * Prints the type of an object
+	 * @param {object} obj The object to print the type of
+	 * @param {string} [title] The log title (optional, defaults to 'Typeof')
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	typeof(obj, title = 'Typeof') {
+		const type = (Object.prototype.toString.call(obj).match(/(?<= )(.*?)(?=\])/gi) || ['Unknown'])[0];
+		C.log(chalk.white.bold(title).concat(': ', CHARS.SPACE, chalk.grey(type)));
 		return this;
 	}
 }
