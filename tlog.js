@@ -1,5 +1,6 @@
 const C = console;
 const { DateTime } = require('luxon');
+const { Stream } = require('stream');
 const chalk = require('chalk');
 const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
@@ -11,6 +12,7 @@ const STD = {
 
 const CHARS = {
 	EOL: require('os').EOL,
+	ESCAPE: '\u001b',
 	EMPTY: '',
 	SPACE: ' '
 };
@@ -295,17 +297,6 @@ class TLog {
 	}
 
 	/**
-	 * Prints a blank line
-	 * @return {TLog} This instance of TLog
-	 * @public
-	 * @chainable
-	 */
-	blank() {
-		wout(CHARS.EMPTY);
-		return this;
-	}
-
-	/**
 	 * Prints the type of an object
 	 * @param {object} obj The object to print the type of
 	 * @param {string} [title] The log title (optional, defaults to 'Typeof')
@@ -316,6 +307,28 @@ class TLog {
 	typeof(obj, title = 'Typeof') {
 		const type = (Object.prototype.toString.call(obj).match(/(?<= )(.*?)(?=\])/gi) || ['Unknown'])[0];
 		C.log(chalk.white.bold(title).concat(': ', CHARS.SPACE, chalk.grey(type)));
+		return this;
+	}
+
+	/**
+	 * Prints a blank line
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	blank() {
+		wout();
+		return this;
+	}
+
+	/**
+	 * Clears the console
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	clear() {
+		wout(`${CHARS.ESCAPE}[2J${CHARS.ESCAPE}[H`);
 		return this;
 	}
 }

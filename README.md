@@ -116,13 +116,17 @@ Levels can be one of:
 
 Prints a comment-style log.
 
+### `logger.typeof(object, title)`
+
+Prints the type of the specified object. Title is optional, defaults to `'Typeof'`.
+
 ### `logger.blank()`
 
 Prints a blank line.
 
-### `logger.typeof(object, title)`
+### `logger.clear()`
 
-Prints the type of the specified object. Title is optional, defaults to `'Typeof'`.
+Clears the console using Unicode escape sequences. May behave differently on different platforms.
 
 ### `logger.console`
 
