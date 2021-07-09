@@ -245,6 +245,18 @@ class TLog {
 	}
 
 	/**
+	 * A generic chainable log method. Acts like a console.log short-hand (but using process.stdout)
+	 * @param {...*} args The objects to write
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	log(...args) {
+		wout(...args);
+		return this;
+	}
+
+	/**
 	 * Prints a formatted debug log message
 	 * @param {string} [title] The log title (optional)
 	 * @param {string} message The log message
@@ -429,6 +441,19 @@ class TLog {
 	 */
 	env(key) {
 		this.#utilLog(key ? `env.${key}` : 'Environment variables', key ? process.env[key] : process.env);
+		return this;
+	}
+
+	/**
+	 * Prints a stringified object
+	 * @param {object} obj The object to stringify
+	 * @param {string} [title] The log title (optional, defaults to 'Stringify')
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	stringify(obj, title = 'Stringify') {
+		this.#utilLog(title, JSON.stringify(obj, null, 2));
 		return this;
 	}
 

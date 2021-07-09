@@ -127,6 +127,10 @@ Levels can be one of:
 | `message` | The message of the log |
 | `extra` | Any extra data to be printed with the log |
 
+#### `logger.log(...args)`
+
+Prints the arguments, just a simple log. Not wrapping `console.log` so can be chained with other methods.
+
 ### Utility logs
 
 I wrote these utility methods to make certain things quicker to debug, depending what it is I was debugging. Especially helpful when combined with chaining.
@@ -169,6 +173,10 @@ Prints the command line arguments.
 #### `logger.env()`
 
 Prints the environment variables.
+
+#### `logger.stringify(object, title)`
+
+Prints the JSON stringified version of the provided `object`. Title is optional, defaults to `'Stringify'`.
 
 ### Invisible utility logs
 
