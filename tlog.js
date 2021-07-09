@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
 //#region Constants
+//#region // * Constants
 const STD = {
 	out: process.stdout,
 	err: process.stderr,
@@ -75,7 +76,7 @@ const LOG = {
 };
 //#endregion
 
-//#region Output functions
+//#region // * Output functions
 /**
  * Write to stdout
  * @param {Stream} std The Stream to write to
@@ -130,15 +131,27 @@ class TLog {
 	c = C;
 
 	/**
+	 * Calls the provided callback
+	 * @param {Function} callback The callback to call
+	 * @param {...*} args Arguments to pass to the callback (Optional)
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	callback(callback, ...args) {
+		if (callback) callback(...args);
+		return this;
+	}
+	/**
 	 * The options the logger will use
-	 * @type {object}
+	 * @type {OPTIONS}
 	 * @private
 	 */
 	#options = {};
 
 	/**
 	 * Create a new instance of TLog
-	 * @param {object} {@link OPTIONS options} The options to use
+	 * @param {OPTIONS} {@link OPTIONS options} The options to use
 	 */
 	constructor(options = OPTIONS) {
 		this.#options = Object.assign({}, OPTIONS, options);

@@ -190,6 +190,10 @@ Prints a blank line.
 
 Clears the console using Unicode escape sequences. May behave differently on different platforms.
 
+#### `logger.callback(callback, ...args)`
+
+Calls the provided `callback` with the provided `args`. `callback` must be a function; `args` are optional.
+
 #### `logger.console`
 
 Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).
