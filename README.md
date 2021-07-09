@@ -92,6 +92,8 @@ From the [Chalk Style docs]:
 
 # API
 
+All API methods return the logger instance, allowing for method chaining (with the exception of `.console`). Some helper functions are also provided.
+
 ### `logger.[level](title, message, extra)`
 
 Prints a log at the specified level. `title` & `extra` are optional.
