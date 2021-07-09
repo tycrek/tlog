@@ -1,11 +1,16 @@
+const C = console;
 const { DateTime } = require('luxon');
 const chalk = require('chalk');
 const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
-const C = console;
-
 //#region Constants
+const STD = {
+	out: process.stdout,
+	err: process.stderr,
+};
+
 const CHARS = {
+	EOL: require('os').EOL,
 	EMPTY: '',
 	SPACE: ' '
 };
@@ -58,6 +63,33 @@ const LOG = {
 		success: ' ',
 	}
 };
+//#endregion
+
+//#region Output functions
+/**
+ * Write to stdout
+ * @param {Stream} std The Stream to write to
+ * @param {...*} args The objects to write
+ */
+function w(std, ...args) {
+	std.write(args.join(CHARS.EMPTY).concat(CHARS.EOL));
+}
+
+/**
+ * Write to stdout
+ * @param {...*} args The objects to write
+ */
+function wout(...args) {
+	w(STD.out, ...args);
+}
+
+/**
+ * Write to stderr
+ * @param {...*} args The objects to write
+ */
+function werr(...args) {
+	w(STD.err, ...args);
+}
 //#endregion
 
 class TLog {
@@ -178,7 +210,7 @@ class TLog {
 	 * @chainable
 	 */
 	#log(level, title, message, extra) {
-		C.log(
+		(level === 'warn' || level === 'error' ? werr : wout)(
 			this.#getTimestamp() +
 			this.#getLabel(level) +
 			this.#getTitle(level, title, message) +
@@ -258,7 +290,7 @@ class TLog {
 	 * @chainable
 	 */
 	comment(message) {
-		C.log(chalk[this.#options.comments.colour](`${this.#options.comments.char} ${message}`));
+		wout(chalk[this.#options.comments.colour](`${this.#options.comments.char} ${message}`));
 		return this;
 	}
 
@@ -269,7 +301,7 @@ class TLog {
 	 * @chainable
 	 */
 	blank() {
-		C.log('');
+		wout(CHARS.EMPTY);
 		return this;
 	}
 

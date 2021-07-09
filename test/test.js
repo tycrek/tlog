@@ -116,7 +116,9 @@ function test(logger) {
 		.typeof(-1, 'Number')
 		.typeof(1, 'Number')
 		.typeof(1.1, 'Number')
+		.typeof(process.stdout)
 		.comment('k that\'s prety cool')
+		.clear()
 
 	logger.blank().blank().blank();
 }
