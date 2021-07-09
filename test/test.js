@@ -1,5 +1,6 @@
 //#region Configs
 const DEFAULTS = {
+	level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
 	timestamp: {
 		enabled: true,
 		colour: 'white',
@@ -25,6 +26,7 @@ const DEFAULTS = {
 };
 
 const T1 = {
+	level: 'warn',
 	timestamp: {
 		enabled: true,
 		colour: 'red',
@@ -53,12 +55,12 @@ const T1 = {
 
 // Since you create a new instance of TLog, you can create multiple loggers for different contexts
 const TLog = require('../tlog');
-const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
+//const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
 // const logger = new TLog(); // Use default settings
 
-test(new TLog(DEFAULTS));
-//test(new TLog(T1));
-testBasic();
+//test(new TLog(DEFAULTS));
+test(new TLog(T1));
+//testBasic();
 
 function testBasic() {
 	const logger = new TLog({});

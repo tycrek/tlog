@@ -32,6 +32,7 @@ const logger2 new TLog({
 These are the default options:
 ```js
 const options = {
+    level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
     timestamp: {
         enabled: true,
         colour: 'white',
@@ -63,6 +64,7 @@ You can include or omit as many options in the constructor as you like. Anything
 
 | Option | Description | Type | Default |
 | --- | --- | --- | --- |
+| `level` | The minimum log level to print | `string` | `'debug'` or `'info'` |
 | `timestamp.enabled` | Enables the timestamp. By default, the timestamp is in [ISO8601 format](https://en.wikipedia.org/wiki/ISO_8601). | `boolean` | `true` |
 | `timestamp.colour` | Sets the [colour][available colours] of the timestamp | `string` | `'white'` |
 | `timestamp.preset` | Overrides the [preset][Luxon prefix] of the timestamp | `string` | `null` |

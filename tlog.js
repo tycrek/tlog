@@ -18,6 +18,7 @@ const CHARS = {
 };
 
 let OPTIONS = {
+	level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
 	timestamp: {
 		enabled: true,
 		colour: 'white',
@@ -43,6 +44,13 @@ let OPTIONS = {
 };
 
 const LOG = {
+	LEVELS: {
+		debug: 100,
+		info: 200,
+		warn: 300,
+		error: 400,
+		success: 100
+	},
 	COLOURS: {
 		debug: 'white',
 		info: 'cyan',
@@ -212,12 +220,13 @@ class TLog {
 	 * @chainable
 	 */
 	#log(level, title, message, extra) {
-		(level === 'warn' || level === 'error' ? werr : wout)(
-			this.#getTimestamp() +
-			this.#getLabel(level) +
-			this.#getTitle(level, title, message) +
-			this.#getMessage(level, title, message) +
-			this.#getExtra(level, extra));
+		if (LOG.LEVELS[level] >= LOG.LEVELS[this.#options.level])
+			(level === 'warn' || level === 'error' ? werr : wout)(
+				this.#getTimestamp() +
+				this.#getLabel(level) +
+				this.#getTitle(level, title, message) +
+				this.#getMessage(level, title, message) +
+				this.#getExtra(level, extra));
 		return this;
 	}
 
