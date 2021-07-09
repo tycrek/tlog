@@ -94,7 +94,7 @@ From the [Chalk Style docs]:
 
 ### `logger.[level](title, message, extra)`
 
-Prints a log at the specified level.
+Prints a log at the specified level. `title` & `extra` are optional.
 
 Levels can be one of:
 
