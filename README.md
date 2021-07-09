@@ -4,7 +4,7 @@
 
 My custom logger library. Uses [Chalk] for colours & [Luxon] for timestamps.
 
-## Usage
+# Usage
 
 Install using `npm i @tycrek/log`, then `require` in your project:
 
@@ -27,7 +27,7 @@ const logger2 new TLog({
 });
 ```
 
-### Options
+## Options
 
 These are the default options:
 ```js
@@ -59,7 +59,7 @@ const options = {
 
 You can include or omit as many options in the constructor as you like. Anything omitted will use the default.
 
-#### Available options
+### Available options
 
 | Option | Description | Type | Default |
 | --- | --- | --- | --- |
@@ -76,7 +76,7 @@ You can include or omit as many options in the constructor as you like. Anything
 | `comments.char` | Sets the comment character | `string` | `'//'` |
 | `comments.colour` | Sets the [colour][available colours] of the comment | `string` | `'grey'` |
 
-##### Available colours
+### Available colours
 
 From the [Chalk Style docs]:
 
@@ -90,9 +90,9 @@ From the [Chalk Style docs]:
 - `white`
 - `gray`
 
-### API
+# API
 
-#### `logger.[level](title, message, extra)`
+### `logger.[level](title, message, extra)`
 
 Prints a log at the specified level.
 
@@ -110,11 +110,11 @@ Levels can be one of:
 | `message` | The message of the log |
 | `extra` | Any extra data to be printed with the log |
 
-#### `logger.comment(message)`
+### `logger.comment(message)`
 
 Prints a comment-style log.
 
-#### `logger.blank()`
+### `logger.blank()`
 
 Prints a blank line.
 
