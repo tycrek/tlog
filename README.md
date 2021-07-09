@@ -4,6 +4,19 @@
 
 My custom logger library. Uses [Chalk] for colours & [Luxon] for timestamps.
 
+### Features
+
+- ✔️ **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
+- ✔️ **Colours, timestamps, & labels**
+- ✔️ **Easily configurable:** just pass in an object with your custom settings
+- ✔️ **Method chaining:** useful for attaching quick debug logs to existing logs
+- ✔️ **Utility logs:** print short info snippets to aid debugging
+- ✔️ **Comments:** comment your log outputs! I'm a little addicted to comments...
+
+| Code | Result |
+| ---- | ------ |
+| ![demo code] | ![demo result] |
+
 # Usage
 
 Install using `npm i @tycrek/log`, then `require` in your project:
@@ -64,7 +77,7 @@ You can include or omit as many options in the constructor as you like. Anything
 
 | Option | Description | Type | Default |
 | --- | --- | --- | --- |
-| `level` | The minimum log level to print | `string` | `'debug'` or `'info'` |
+| `level` | The minimum [log level] to print | `string` | `'debug'` or `'info'` |
 | `timestamp.enabled` | Enables the timestamp. By default, the timestamp is in [ISO8601 format](https://en.wikipedia.org/wiki/ISO_8601). | `boolean` | `true` |
 | `timestamp.colour` | Sets the [colour][available colours] of the timestamp | `string` | `'white'` |
 | `timestamp.preset` | Overrides the [preset][Luxon prefix] of the timestamp | `string` | `null` |
@@ -173,8 +186,15 @@ Clears the console using Unicode escape sequences. May behave differently on dif
 
 Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).
 
+# Colours.
+
+**Colours**. I am **Canadian**. It is **colours**. If you don't like it, go **fork** yourself.
+
 [Chalk]: https://github.com/chalk/chalk
 [Luxon]: https://moment.github.io/luxon
+[demo code]: https://ass.rip/cRxQTzM86G4R/direct
+[demo result]: https://ass.rip/L74o8uxpkKez/direct
+[log level]: #loggerleveltitle-message-extra
 [available colours]: #available-colours
 [Chalk Style docs]: https://www.npmjs.com/package/chalk/v/1.0.0#styles
 [Luxon prefix]: https://moment.github.io/luxon/#/formatting?id=presets
