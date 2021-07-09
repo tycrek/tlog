@@ -92,8 +92,31 @@ From the [Chalk Style docs]:
 
 ### API
 
-# coming soon, I need to go eat dinner because I'm hungry
+#### `logger.[level](title, message, extra)`
 
+Prints a log at the specified level.
+
+Levels can be one of:
+
+- `debug`
+- `info`
+- `warn`
+- `error`
+- `success`
+
+| Parameter | Description |
+| --- | --- |
+| `title` | The title of the log |
+| `message` | The message of the log |
+| `extra` | Any extra data to be printed with the log |
+
+#### `logger.comment(message)`
+
+Prints a comment-style log.
+
+#### `logger.blank()`
+
+Prints a blank line.
 
 [Chalk]: https://github.com/chalk/chalk
 [Luxon]: https://moment.github.io/luxon
