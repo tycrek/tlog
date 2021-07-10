@@ -118,6 +118,7 @@ class TLog {
 	 */
 	static AvailableColours = AvailableColours;
 
+	//#region Console exposure
 	/**
 	 * Staticly exposed console, in case you wanted to use it
 	 * @readonly
@@ -134,6 +135,7 @@ class TLog {
 	 */
 	console = C;
 	c = C;
+	//#endregion
 
 	/**
 	 * Calls the provided callback
@@ -513,6 +515,7 @@ class TLog {
 	 * @return {TLog} This instance of TLog
 	 * @public
 	 * @chainable
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify}
 	 */
 	stringify(obj, title = 'Stringify') {
 		this.#utilLog(title, JSON.stringify(obj, null, 2));
