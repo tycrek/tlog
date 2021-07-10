@@ -1,6 +1,6 @@
 # tlog
 
-[![npm (scoped)](https://img.shields.io/npm/v/@tycrek/log?color=%23CB3837&label=View%20on%20NPM&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/@tycrek/log)
+[![npm image]][npm page]
 
 My custom logger library. Uses [Chalk] for colours & [Luxon] for timestamps.
 
@@ -12,6 +12,7 @@ My custom logger library. Uses [Chalk] for colours & [Luxon] for timestamps.
 - ✔️ **Method chaining:** useful for attaching quick debug logs to existing logs
 - ✔️ **Utility logs:** print short info snippets to aid debugging
 - ✔️ **Comments:** comment your log outputs! I'm a little addicted to comments...
+- ✔️ **Plugins:** easily integrate pre-built loggers with existing code
 
 | Code | Result |
 | ---- | ------ |
@@ -78,7 +79,7 @@ You can include or omit as many options in the constructor as you like. Anything
 | Option | Description | Type | Default |
 | --- | --- | --- | --- |
 | `level` | The minimum [log level] to print | `string` | `'debug'` or `'info'` |
-| `timestamp.enabled` | Enables the timestamp. By default, the timestamp is in [ISO8601 format](https://en.wikipedia.org/wiki/ISO_8601). | `boolean` | `true` |
+| `timestamp.enabled` | Enables the timestamp. By default, the timestamp is in [ISO8601 format]. | `boolean` | `true` |
 | `timestamp.colour` | Sets the [colour][available colours] of the timestamp | `string` | `'white'` |
 | `timestamp.preset` | Overrides the [preset][Luxon prefix] of the timestamp | `string` | `null` |
 | `timestamp.format` | Overrides the [format][Luxon format] of the timestamp. If both `preset` & `format` are set, `format` takes precedence. | `string` | `null` |
@@ -268,11 +269,14 @@ Prints the value of the specified header from the request.
 
 **Colours**. I am **Canadian**. It is **colours**. If you don't like it, go **fork** yourself.
 
+[npm image]: https://img.shields.io/npm/v/@tycrek/log?color=%23CB3837&label=View%20on%20NPM&logo=npm&style=for-the-badge
+[npm page]: https://www.npmjs.com/package/@tycrek/log
 [Chalk]: https://github.com/chalk/chalk
 [Luxon]: https://moment.github.io/luxon
 [demo code]: https://ass.rip/cRxQTzM86G4R/direct
 [demo result]: https://ass.rip/L74o8uxpkKez/direct
 [log level]: #loggerleveltitle-message-extra
+[ISO8601 format]: https://en.wikipedia.org/wiki/ISO_8601
 [available colours]: #available-colours
 [Chalk Style docs]: https://www.npmjs.com/package/chalk/v/1.0.0#styles
 [Luxon prefix]: https://moment.github.io/luxon/#/formatting?id=presets
