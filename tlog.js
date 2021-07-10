@@ -295,11 +295,11 @@ class TLog {
 	#log(level, title, message, extra) {
 		if (LOG.LEVELS[level] >= LOG.LEVELS[this.#options.level])
 			(level === 'warn' || level === 'error' ? werr : wout)(
-				this.#getTimestamp() +
-				this.#getLabel(level) +
-				this.#getTitle(level, title, message) +
-				this.#getMessage(level, title, message) +
-				this.#getExtra(level, extra));
+				`${this.#getTimestamp()}` +
+				`${this.#getLabel(level)}` +
+				`${this.#getTitle(level, title, message)}` +
+				`${this.#getMessage(level, title, message)}` +
+				`${(extra != null) ? this.#getExtra(level, extra) : CHARS.EMPTY}`);
 		return this;
 	}
 
@@ -313,7 +313,7 @@ class TLog {
 	 * @chainable
 	 */
 	#utilLog(title, data, extra) {
-		wout(chalk.white.bold(`${title}: `).concat(chalk.white(data), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
+		wout(chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
 		return this;
 	}
 
