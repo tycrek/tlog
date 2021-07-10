@@ -189,6 +189,26 @@ Prints the JSON stringified version of the provided `object`. Title is optional,
 
 Prints the process uptime in seconds.
 
+### `logger.boolean(condition, title)`
+
+Prints the boolean evaluation of a `condition`. Title is optional, defaults to `'Boolean'`.
+
+### `logger.true(condition, message)`
+
+Only prints `message` if the `condition` is true.
+
+### `logger.false(condition, message)`
+
+Only prints `message` if the `condition` is false.
+
+### `ifElse(condition, messageIfTrue, messageIfFalse)`
+
+Prints `messageIfTrue` if the `condition` is true, `messageIfFalse` otherwise. Both are optional, defaults to `'True'` & `'False'` respectively.
+
+### `logger.null(variable, message)`
+
+Prints `message` if the `variable` is `null`. `message` is optional, defaults to `'Null'` or `'Undefined'`, depending on the value of `variable`. If `variable` is not `null` or `undefined`, nothing will be printed.
+
 ## Invisible utility logs
 
 These methods mostly write certain whitespace to `stdout`, to allow for easy debugging.

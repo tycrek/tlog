@@ -218,6 +218,16 @@ class TLog {
 	}
 
 	/**
+	 * Attempts to convert a value to a Boolean primitive
+	 * @param {object} value The value to convert
+	 * @return {boolean} The converted value
+	 * @private
+	 */
+	#toBoolean(value) {
+		return Boolean(value).valueOf();
+	}
+
+	/**
 	 * Generate a log-ready timestamp
 	 * @return {string} A timestamp, with colours & formatting (if enabled)
 	 * @private
@@ -556,6 +566,77 @@ class TLog {
 		this.#utilLog('Uptime', process.uptime(), 'seconds');
 		return this;
 	}
+
+	/**
+	 * Prints the boolean evaluation of a condition
+	 * @param {*} condition The condition to evaluate
+	 * @param {string} [title] The log title (optional, defaults to 'Boolean')
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/valueOf}
+	 */
+	boolean(condition, title = 'Boolean') {
+		this.#utilLog(title, this.#toBoolean(condition));
+		return this;
+	}
+
+	/**
+	 * Prints the message only if the condition is boolean-true.
+	 * @param {boolean} condition The condition to test
+	 * @param {string} message The message to print
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	true(condition, message) {
+		if (this.#toBoolean(condition))
+			this.#utilLog('True', message);
+		return this;
+	}
+
+	/**
+	 * Prints the message only if the condition is boolean-false.
+	 * @param {boolean} condition The condition to test
+	 * @param {string} message The message to print
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	false(condition, message) {
+		if (!this.#toBoolean(condition))
+			this.#utilLog('False', message);
+		return this;
+	}
+
+	/**
+	 * Prints one of two messages based on the condition
+	 * @param {boolean} condition The condition to test
+	 * @param {string} [messageIfTrue] The message to print if the condition is true (optional, defaults to 'True')
+	 * @param {string} [messageIfFalse] The message to print if the condition is false (optional, defaults to 'False')
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	ifElse(condition, messageIfTrue = 'True', messageIfFalse = 'False') {
+		if (this.#toBoolean(condition)) this.#utilLog('IfElse', messageIfTrue);
+		else this.#utilLog('IfElse', messageIfFalse);
+		return this;
+	}
+
+	/**
+	 * Prints if the variable is null or undefined. If it is not, nothing will print.
+	 * @param {*} variable The variable to test
+	 * @param {string} [message] The message to print (optional, defaults to 'Null' or 'Undefined')
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null}
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined}
+	 */
+	null(variable, message) {
+		if (variable === null) this.#utilLog('Null', message || '');
+		else if (variable === undefined) this.#utilLog('Undefined', message || '');
 		return this;
 	}
 

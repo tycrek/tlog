@@ -53,17 +53,6 @@ const T1 = {
 
 //#endregion
 
-// Since you create a new instance of TLog, you can create multiple loggers for different contexts
-const TLog = require('../tlog');
-//const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
-//const logger = new TLog(); // Use default settings
-
-testBasic();
-test(new TLog(DEFAULTS));
-//test(new TLog(T1));
-//testExpress();
-testExpress2();
-
 function testBasic() {
 	const logger = new TLog({});
 	logger.info('Hello', 'This is a basic test.');
@@ -73,7 +62,12 @@ function testBasic() {
  * @param {TLog} logger
  * @returns {void}
  */
-function test(logger) {
+function test() {
+	const logger = new TLog({ plugins: { process: true }, timestamp: { enabled: false } });
+	logger.enable.process().debug('Process logger enabled');
+	let aBetterLoggingTool;
+	let somethingElseIdfk = null;
+
 	// 3 parameters, only 1 is required
 	// Parameters are: title, message, extra
 	logger.debug('Cache flushed', 'System cache has been flushed', 'operation took 0.35ms to complete');
@@ -158,6 +152,35 @@ function test(logger) {
 		.blank()
 		.success('Hell yeah, we got some utility methods!')
 		.comment('Co-written by tycrek & GitHub CoPilot (including these docs & tests!')
+		.blank()
+		.blank()
+		.comment('.boolean can quickly evaluate a condition')
+		.boolean(15 - 5 === 10)
+		.boolean('Bob'.length > 5, 'String length meets requirements')
+		.blank()
+		.comment('.true/.false will only log if the condition is true (or false, or... you\'ll figure it out)')
+		.true(7 - 2 === 5)
+		.false(7 + 3 === 15)
+		.blank()
+		.comment('You can also pass custom messages')
+		.true(5 == 5, 'Well obviously')
+		.false(5 == 6, 'Are you stupid?')
+		.blank()
+		.comment('.ifelse does both!')
+		.ifElse(null == undefined)
+		.ifElse(4 * 2 == 8, 'Woohoo!', 'Boo!')
+		.ifElse('ABC'.endsWith('Z'), 'Woohoo!', 'Boo!')
+		.blank()
+		.comment('.null will only log if the variable provided is either null or undefined')
+		.null(null)
+		.null(undefined)
+		.comment('Defined above: ')
+		.comment(`  let aBetterLoggingTool;`)
+		.comment(`  let somethingElseIdfk = null;`)
+		.null(aBetterLoggingTool, 'A logging tool better than this')
+		.null(somethingElseIdfk, 'Something else I don-')
+		.blank()
+
 
 	logger.blank().blank().blank();
 }
@@ -212,3 +235,14 @@ function testExpress2() {
 	// tlog can also host your Express app for you
 	logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
 }
+
+// Since you create a new instance of TLog, you can create multiple loggers for different contexts
+const TLog = require('../tlog');
+//const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
+//const logger = new TLog(); // Use default settings
+
+testBasic();
+test(new TLog(DEFAULTS));
+//test(new TLog(T1));
+//testExpress();
+//testExpress2();
