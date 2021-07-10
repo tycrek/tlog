@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
 // Plugin imports
+const Process = require('./plugins/process');
 const Express = require('./plugins/express');
 
 //#region // * Constants
@@ -23,6 +24,7 @@ const CHARS = {
 let OPTIONS = {
 	level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
 	plugins: {
+		process: false,
 		express: false
 	},
 	timestamp: {
@@ -153,13 +155,11 @@ class TLog {
 	//#region// * Plugins
 
 	/**
-	 * Enable plugins
-	 * (tycrek: I see you, I know you want to write more JSDoc, but DON'T, it doesn't need it!)
-	 * @public
+	 * @type {Process}
+	 * @see {@link Process}
+	 * @private
 	 */
-	enable = {
-		express: () => (this.#options.plugins.express && (this.#express = new Express(this)), this)
-	};
+	#process = null;
 
 	/**
 	 * @type {Express}
@@ -167,6 +167,29 @@ class TLog {
 	 * @private
 	 */
 	#express = null;
+
+	/**
+	 * Enable plugins
+	 * (tycrek: I see you, I know you want to write more JSDoc, but DON'T, it doesn't need it!)
+	 * @public
+	 * @chainable
+	 */
+	enable = {
+		/**
+		 * Activates the {@link Process} plugin
+		 * @param {Process.DEFAULT_OPTIONS} [options] The options to use (Optional)
+		 * @chainable
+		 * @return {TLog} This instance of TLog
+		 */
+		process: (options) => (this.#options.plugins.process && (this.#process = new Process(this, options)) && this.#process.listen(), this),
+
+		/**
+		 * Activates the {@link Express} plugin
+		 * @chainable
+		 * @return {TLog} This instance of TLog
+		 */
+		express: () => (this.#options.plugins.express && (this.#express = new Express(this)), this)
+	};
 
 	/**
 	 * Express.js middleware

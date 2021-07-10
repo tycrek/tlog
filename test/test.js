@@ -189,9 +189,10 @@ function testExpress() {
 
 function testExpress2() {
 	// Activate the Express plugin
-	const logger = new TLog({ plugins: { express: true } });
+	const logger = new TLog({ plugins: { process: true, express: true } });
 
 	// Enable the plugin
+	logger.enable.process().debug('Process logger enabled');
 	logger.enable.express().debug('Express middleware enabled');
 
 	const app = require('express')();
@@ -202,9 +203,11 @@ function testExpress2() {
 	// Standalone functions can be called within the route handlers
 	app.get('/', (req, res) => res.redirect('/redir'));
 	app.get('/redir', (req, res) => res.send('You made it'));
-	app.get('/404', (req, res) => res.status(404).send('Not Found'));
-	app.get('/500', (req, res) => res.status(500).send('Internal Server Error'));
-	app.get('/100', (req, res) => res.status(100).send('Continue'));
+	app.get('/client', (req, res) => res.status(404).send('Not Found'));
+	app.get('/error', (req, res) => res.status(500).send('Internal Server Error'));
+	app.get('/continue', (req, res) => res.status(100).send('Continue'));
+	app.get('/fail', (req, res) => res.send('This variable does not exist: ' + haha));
+	app.get('/pfail', (req, res) => new Promise((resolve, reject) => reject(new Error('Failed to complete request!'))));
 
 	// tlog can also host your Express app for you
 	logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters

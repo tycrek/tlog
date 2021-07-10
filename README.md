@@ -211,11 +211,37 @@ Exposes the `console` object for convenience. This is also available staticly on
 
 ## Plugins
 
-Some packages allow you to hook into the logging system. Developers can make plugins that make this easier to use. tlog comes with an [Express](http://expressjs.com/) plugin.
+Some packages allow you to hook into the logging system. Developers can make plugins that make this easier to use. tlog comes with a **Process** plugin & an **[Express]** plugin.
 
 ### `logger.enable.[plugin]()`
 
 Enables the specified plugin. Chaining is supported.
+
+### Process
+
+The Process plugin lets you automatically log some [events][process events] & [termination signals]:
+
+| Events | Signals |
+| --- | --- |
+| `'warning'` | `'SIGINT'` |
+| `'exit'` | `'SIGTERM'` |
+| `'beforeExit'` | `'SIGQUIT'` |
+| `'uncaughtException'` | `'SIGBREAK'` |
+| `'unhandledRejection'` | `'SIGHUP'` |
+
+- `'uncaughtException'` uses [`process.setUncaughtExceptionCaptureCallback`][process exception callback] to capture the exception
+- `'unhandledRejection'` is used for uncaught `Promise` rejections
+- All signals will trigger `process.exit()`
+- Only the `uncaughtException` event will trigger `process.exit(1)`
+
+You can configure the plugin by passing options to the constructor. All the events detailed above are available as booleans & the `signals` option is an array of signals to listen for. Only the signals listed above will log when passed to the constructor, any other signals will be ignored. All options are enabled by default.
+
+```js
+// Enable the Process plugin
+logger.enable.process()
+    .debug('Process plugin enabled')
+    .comment('Enabler methods are chainable too!');
+```
 
 ### Express
 
@@ -226,9 +252,7 @@ The Express plugin lets you easily log request data. It's available as both midd
 const logger = new TLog({plugins: {express: true}});
 
 // Enable the plugin
-logger.enable.express()
-    .debug('Express middleware enabled')
-    .comment('Enabler methods are chainable too!');
+logger.enable.express().debug('Express middleware enabled');
 
 // Tell Express to use the logger as middleware
 app.use(logger.express(true));
@@ -285,3 +309,7 @@ Prints the value of the specified header from the request.
 [Chalk Style docs]: https://www.npmjs.com/package/chalk/v/1.0.0#styles
 [Luxon prefix]: https://moment.github.io/luxon/#/formatting?id=presets
 [Luxon format]: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
+[Express]: (http://expressjs.com/)
+[process events]: https://nodejs.org/api/process.html#process_process_events
+[process exception callback]: https://nodejs.org/api/process.html#process_process_setuncaughtexceptioncapturecallback_fn
+[termination signals]: https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
