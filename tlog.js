@@ -305,6 +305,20 @@ class TLog {
 	}
 
 	/**
+	 * A generic chainable error log method. Acts like a console.error short-hand (but using process.stderr).
+	 * Useful for printing errors as it will show the stack trace
+	 * @param {...*} args The objects to write
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	err(...args) {
+		const lastArg = args[args.length - 1];
+		werr(...((lastArg instanceof Error) ? args.slice(0, -1).concat(lastArg.stack) : args));
+		return this;
+	}
+
+	/**
 	 * Prints a formatted debug log message
 	 * @param {string} [title] The log title (optional)
 	 * @param {string} message The log message

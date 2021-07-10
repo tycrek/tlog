@@ -109,7 +109,9 @@ From the [Chalk Style docs]:
 
 All API methods return the logger instance, allowing for method chaining (with the exception of `.console`). Some helper functions are also provided.
 
-## `logger.[level](title, message, extra)`
+## General log methods
+
+### `logger.[level](title, message, extra)`
 
 Prints a log at the specified level. `title` & `extra` are optional.
 
@@ -130,6 +132,10 @@ Levels can be one of:
 ### `logger.log(...args)`
 
 Prints the arguments, just a simple log with a timestamp. Not wrapping `console.log` so can be chained with other methods.
+
+### `logger.err(...args)`
+
+Prints the arguments to `stderr`, just a simple log with a timestamp. Not wrapping `console.err` so can be chained with other methods. If the last argument is an error, it will be printed as an error, with the stack trace.
 
 ## Utility logs
 
