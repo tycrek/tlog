@@ -6,8 +6,9 @@ const TLog = require('../tlog');
 const chalk = require('chalk');
 
 const TITLE = 'Express';
-const LABEL = chalk.green.inverse(`[${TITLE}]`);
 const OPTIONS = {};
+const LABEL = (colour = 'green') => chalk[colour].inverse(`[${TITLE}]`);
+const code2colour = { 1: 'cyan', 2: 'green', 3: 'cyan', 4: 'yellow', 5: 'red' };
 
 class Express {
 	/**
@@ -37,11 +38,12 @@ class Express {
 	 * @param {string} [title] The title of the log (Optional)
 	 * @param {string} message The message of the log
 	 * @param {string} [extra] The extra data for the log (Optional)
+	 * @param {string} [colour] The colour of the log (Optional, defaults to 'green')
 	 * @returns {string} The log-ready String
 	 * @private
 	 */
-	#buildExpressLog(title, message, extra) {
-		return `${LABEL} ${message ? chalk.green.bold(title.concat(': ')) : ''}${message || ''} ${extra ? chalk.italic(`(${extra})`) : ''}`;
+	#buildExpressLog(title, message, extra, colour = 'green') {
+		return `${LABEL(colour)} ${message ? chalk[colour].bold(title.concat(': ')) : ''}${message || ''} ${extra ? chalk.italic(`(${extra})`) : ''}`;
 	}
 
 	/**
@@ -53,8 +55,15 @@ class Express {
 	 * @public
 	 */
 	Host(app, port, host, callback = null) {
-		app.use((req, res, _next) => this.#tlog.warn(this.#buildExpressLog('Not found', req.url)).callback(() => res.sendStatus(404)));
-		app.use((err, _req, res, _next) => this.#tlog.error(this.#buildExpressLog('Response error', err)).callback(() => res.sendStatus(500)));
+		// 404 Handler
+		app.use((req, res, _next) =>
+			this.#tlog.log(this.#buildExpressLog('Not found', req.url, '404', 'yellow')).callback(() => res.sendStatus(404)));
+
+		// 500 Handler
+		app.use((err, _req, res, _next) =>
+			this.#tlog.log(this.#buildExpressLog('Response error', err, '500', 'red')).err(err).callback(() => res.sendStatus(500)));
+
+		// Host the Express app
 		app.listen(port, host, () =>
 			this.#tlog.log(this.#buildExpressLog(
 				'Express started',
@@ -73,7 +82,7 @@ class Express {
 	 */
 	use(req, res, next) {
 		this.#tlog.log(this.#buildExpressLog(`HTTP ${req.method}`, req.url));
-		res.on('finish', () => this.#tlog.log(this.#buildExpressLog('Response', res.statusCode)));
+		res.on('finish', () => this.#tlog.log(this.#buildExpressLog('Response', res.statusCode, undefined, code2colour[`${res.statusCode}`.slice(0, 1)])));
 		next();
 	}
 

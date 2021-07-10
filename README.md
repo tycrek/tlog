@@ -254,7 +254,7 @@ Sets an option for the Express plugin. Chaining is supported (returns the Expres
 
 #### `logger.express().Host(app, port, host, callback)`
 
-Hosts the Express app on the specified port. `app` is the Express app, `port` is the port to host the app on,`host` is the interface to listen on. If `callback` is provided, it will be called when the app is ready.
+Hosts the Express app on the specified port. `app` is the Express app, `port` is the port to host the app on,`host` is the interface to listen on. If `callback` is provided, it will be called when the app is ready. Hosting your app this way automatically logs all requests, responses, & errors.
 
 ####  `logger.express().UserAgent(req)`
 

@@ -200,13 +200,11 @@ function testExpress2() {
 	app.use(logger.express(true));
 
 	// Standalone functions can be called within the route handlers
-	app.get('/', (req, res) => {
-		logger.express().UserAgent(req);
-		logger.express().Header(req, 'Accept');
-
-		// Send the response
-		res.send('Hello, world!');
-	});
+	app.get('/', (req, res) => res.redirect('/redir'));
+	app.get('/redir', (req, res) => res.send('You made it'));
+	app.get('/404', (req, res) => res.status(404).send('Not Found'));
+	app.get('/500', (req, res) => res.status(500).send('Internal Server Error'));
+	app.get('/100', (req, res) => res.status(100).send('Continue'));
 
 	// tlog can also host your Express app for you
 	logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
