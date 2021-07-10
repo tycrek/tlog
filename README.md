@@ -109,7 +109,7 @@ From the [Chalk Style docs]:
 
 All API methods return the logger instance, allowing for method chaining (with the exception of `.console`). Some helper functions are also provided.
 
-### `logger.[level](title, message, extra)`
+## `logger.[level](title, message, extra)`
 
 Prints a log at the specified level. `title` & `extra` are optional.
 
@@ -127,64 +127,136 @@ Levels can be one of:
 | `message` | The message of the log |
 | `extra` | Any extra data to be printed with the log |
 
-### Utility logs
+### `logger.log(...args)`
+
+Prints the arguments, just a simple log with a timestamp. Not wrapping `console.log` so can be chained with other methods.
+
+## Utility logs
 
 I wrote these utility methods to make certain things quicker to debug, depending what it is I was debugging. Especially helpful when combined with chaining.
-#### `logger.comment(message)`
+### `logger.comment(message)`
 
 Prints a comment-style log.
 
-#### `logger.typeof(object, title)`
+### `logger.typeof(object, title)`
 
 Prints the type of the specified object. Title is optional, defaults to `'Typeof'`.
 
-#### `logger.epoch()`
+### `logger.epoch()`
 
 Prints the current Unix epoch in milliseconds.
 
-#### `logger.isTTY()`
+### `logger.isTTY()`
 
 Prints if the current console is a TTY.
 
-#### `logger.windowSize()`
+### `logger.windowSize()`
 
 Prints the terminal size, in columns & rows.
 
-#### `logger.pid()`
+### `logger.pid()`
 
 Prints the current process ID.
 
-#### `logger.cwd()`
+### `logger.cwd()`
 
 Prints the current working directory.
 
-#### `logger.node()`
+### `logger.node()`
 
 Prints the Node.js version.
 
-#### `logger.argv()`
+### `logger.argv()`
 
 Prints the command line arguments.
 
-#### `logger.env()`
+### `logger.env()`
 
 Prints the environment variables.
 
-### Invisible utility logs
+### `logger.stringify(object, title)`
+
+Prints the JSON stringified version of the provided `object`. Title is optional, defaults to `'Stringify'`.
+
+## Invisible utility logs
 
 These methods mostly write certain whitespace to `stdout`, to allow for easy debugging.
 
-#### `logger.blank()`
+### `logger.blank()`
 
 Prints a blank line.
 
-#### `logger.clear()`
+### `logger.clear()`
 
 Clears the console using Unicode escape sequences. May behave differently on different platforms.
 
-#### `logger.console`
+### `logger.callback(callback, ...args)`
+
+Calls the provided `callback` with the provided `args`. `callback` must be a function; `args` are optional.
+
+### `logger.console`
 
 Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).
+
+## Plugins
+
+Some packages allow you to hook into the logging system. Developers can make plugins that make this easier to use. tlog comes with an [Express](http://expressjs.com/) plugin.
+
+### `logger.enable.[plugin]()`
+
+Enables the specified plugin. Chaining is supported.
+
+### Express
+
+The Express plugin lets you easily log request data. It's available as both middleware & as standalone functions.
+
+```js
+// Activate the Express plugin
+const logger = new TLog({plugins: {express: true}});
+
+// Enable the plugin
+logger.enable.express()
+    .debug('Express middleware enabled')
+    .comment('Enabler methods are chainable too!');
+
+// Tell Express to use the logger as middleware
+app.use(logger.express(true));
+
+// Standalone functions can be called within the route handlers
+app.get('/', (req, res) => {
+    logger.comment('Print the user agent')
+        .express().UserAgent(req);
+
+    logger.comment('Print Accept header')
+        .express().Header(req, 'Accept');
+
+    // Send the response
+    res.send('Hello, world!');
+});
+
+// tlog can also host your Express app for you
+logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
+```
+
+#### `logger.express(true)`
+
+Passes the middleware to Express. Only use as a parameter to `app.use()`.
+
+#### `logger.express().set(option, value)`
+
+Sets an option for the Express plugin. Chaining is supported (returns the Express plugin, **not** the logger)
+
+#### `logger.express().Host(app, port, host, callback)`
+
+Hosts the Express app on the specified port. `app` is the Express app, `port` is the port to host the app on,`host` is the interface to listen on. If `callback` is provided, it will be called when the app is ready.
+
+####  `logger.express().UserAgent(req)`
+
+Prints the user agent of the request.
+
+#### `logger.express().Header(req, header)`
+
+Prints the value of the specified header from the request.
 
 # Colours.
 

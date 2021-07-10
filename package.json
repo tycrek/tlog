@@ -30,5 +30,8 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "luxon": "^1.27.0"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
   }
 }

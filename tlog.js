@@ -4,7 +4,10 @@ const { Stream } = require('stream');
 const chalk = require('chalk');
 const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
-//#region Constants
+// Plugin imports
+const Express = require('./plugins/express');
+
+//#region // * Constants
 const STD = {
 	out: process.stdout,
 	err: process.stderr,
@@ -19,6 +22,9 @@ const CHARS = {
 
 let OPTIONS = {
 	level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+	plugins: {
+		express: false
+	},
 	timestamp: {
 		enabled: true,
 		colour: 'white',
@@ -75,7 +81,7 @@ const LOG = {
 };
 //#endregion
 
-//#region Output functions
+//#region // * Output functions
 /**
  * Write to stdout
  * @param {Stream} std The Stream to write to
@@ -130,15 +136,57 @@ class TLog {
 	c = C;
 
 	/**
+	 * Calls the provided callback
+	 * @param {Function} callback The callback to call
+	 * @param {...*} args Arguments to pass to the callback (Optional)
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	callback(callback, ...args) {
+		if (callback) callback(...args);
+		return this;
+	}
+
+	//#region// * Plugins
+
+	/**
+	 * Enable plugins
+	 * (tycrek: I see you, I know you want to write more JSDoc, but DON'T, it doesn't need it!)
+	 * @public
+	 */
+	enable = {
+		express: () => (this.#options.plugins.express && (this.#express = new Express(this)), this)
+	};
+
+	/**
+	 * @type {Express}
+	 * @see {@link Express}
+	 * @private
+	 */
+	#express = null;
+
+	/**
+	 * Express.js middleware
+	 * @param {boolean} [middleware] Set to true if this is being passed through app.use() (Optional, defaults to false)
+	 * @retun {(Express|Function)}
+	 * @public
+	 */
+	express(middleware = false) {
+		return middleware ? ((...args) => this.#express.use(...args)) : this.#express;
+	}
+	//#endregion
+
+	/**
 	 * The options the logger will use
-	 * @type {object}
+	 * @type {OPTIONS}
 	 * @private
 	 */
 	#options = {};
 
 	/**
 	 * Create a new instance of TLog
-	 * @param {object} {@link OPTIONS options} The options to use
+	 * @param {OPTIONS} {@link OPTIONS options} The options to use
 	 */
 	constructor(options = OPTIONS) {
 		this.#options = Object.assign({}, OPTIONS, options);
@@ -241,6 +289,18 @@ class TLog {
 	 */
 	#utilLog(title, data, extra) {
 		wout(chalk.white.bold(`${title}: `).concat(chalk.white(data), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
+		return this;
+	}
+
+	/**
+	 * A generic chainable log method. Acts like a console.log short-hand & with a timestamp (but using process.stdout)
+	 * @param {...*} args The objects to write
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	log(...args) {
+		wout(this.#getTimestamp(), ...args);
 		return this;
 	}
 
@@ -429,6 +489,19 @@ class TLog {
 	 */
 	env(key) {
 		this.#utilLog(key ? `env.${key}` : 'Environment variables', key ? process.env[key] : process.env);
+		return this;
+	}
+
+	/**
+	 * Prints a stringified object
+	 * @param {object} obj The object to stringify
+	 * @param {string} [title] The log title (optional, defaults to 'Stringify')
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 */
+	stringify(obj, title = 'Stringify') {
+		this.#utilLog(title, JSON.stringify(obj, null, 2));
 		return this;
 	}
 
