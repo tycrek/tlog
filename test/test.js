@@ -62,7 +62,7 @@ testBasic();
 test(new TLog(DEFAULTS));
 //test(new TLog(T1));
 //testExpress();
-//testExpress2();
+testExpress2();
 
 function testBasic() {
 	const logger = new TLog({});
@@ -205,7 +205,7 @@ function testExpress2() {
 		logger.express().Header(req, 'Accept');
 
 		// Send the response
-		res.send('Hello, world!').send('hi');
+		res.send('Hello, world!');
 	});
 
 	// tlog can also host your Express app for you
