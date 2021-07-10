@@ -553,7 +553,9 @@ class TLog {
 	 * @see {@link https://nodejs.org/api/process.html#process_process_uptime}
 	 */
 	uptime() {
-		this.#utilLog('Uptime', Math.floor(process.uptime()), 'seconds');
+		this.#utilLog('Uptime', process.uptime(), 'seconds');
+		return this;
+	}
 		return this;
 	}
 
