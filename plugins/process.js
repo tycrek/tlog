@@ -145,7 +145,6 @@ class Process {
 					this.#tlog
 						.error('Unhandled exception', ' ')
 						.err(err)
-						.uptime()
 						.callback(this.#exit));
 
 		// Signals
