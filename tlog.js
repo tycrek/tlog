@@ -523,6 +523,18 @@ class TLog {
 	}
 
 	/**
+	 * Prints the process uptime
+	 * @return {TLog} This instance of TLog
+	 * @public
+	 * @chainable
+	 * @see {@link https://nodejs.org/api/process.html#process_process_uptime}
+	 */
+	uptime() {
+		this.#utilLog('Uptime', Math.floor(process.uptime()), 'seconds');
+		return this;
+	}
+
+	/**
 	 * Prints a blank line
 	 * @return {TLog} This instance of TLog
 	 * @public

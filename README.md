@@ -185,6 +185,10 @@ Prints the environment variables.
 
 Prints the JSON stringified version of the provided `object`. Title is optional, defaults to `'Stringify'`.
 
+### `logger.uptime()`
+
+Prints the process uptime in seconds.
+
 ## Invisible utility logs
 
 These methods mostly write certain whitespace to `stdout`, to allow for easy debugging.
