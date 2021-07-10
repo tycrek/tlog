@@ -56,11 +56,13 @@ const T1 = {
 // Since you create a new instance of TLog, you can create multiple loggers for different contexts
 const TLog = require('../tlog');
 //const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
-// const logger = new TLog(); // Use default settings
+//const logger = new TLog(); // Use default settings
 
-//test(new TLog(DEFAULTS));
-test(new TLog(T1));
-//testBasic();
+testBasic();
+test(new TLog(DEFAULTS));
+//test(new TLog(T1));
+//testExpress();
+testExpress2();
 
 function testBasic() {
 	const logger = new TLog({});
@@ -157,6 +159,55 @@ function test(logger) {
 		.success('Hell yeah, we got some utility methods!')
 		.comment('Co-written by tycrek & GitHub CoPilot (including these docs & tests!')
 
-
 	logger.blank().blank().blank();
+}
+
+function testExpress() {
+	// Shorthand for creating a new Express app
+	const app = require('express')();
+
+	// Create the logger
+	const logger = new TLog({ plugins: { express: true } });
+
+	// Enable the Express plugin
+	logger.enable.express().debug('Express logs active');
+
+	// Tell Express to use the middleware
+	// (this is optional, but it's a good idea to use it)
+	app.use(logger.express(true));
+
+	// Use TLog Express helper functions in your route handlers
+	app.get('/', (req, res) => {
+		logger.express().UserAgent(req);
+		logger.express().Header(req, 'Accept');
+		res.send(`Welcome to: ${req.url}`);
+	});
+
+	// TLog can also host your Express app for you
+	logger.express().Host(app, 10491, '0.0.0.0', () => logger.log('That\'s epic!'));
+}
+
+function testExpress2() {
+	// Activate the Express plugin
+	const logger = new TLog({ plugins: { express: true } });
+
+	// Enable the plugin
+	logger.enable.express().debug('Express middleware enabled');
+
+	const app = require('express')();
+
+	// Tell Express to use the logger as middleware
+	app.use(logger.express(true));
+
+	// Standalone functions can be called within the route handlers
+	app.get('/', (req, res) => {
+		logger.express().UserAgent(req);
+		logger.express().Header(req, 'Accept');
+
+		// Send the response
+		res.send('Hello, world!').send('hi');
+	});
+
+	// tlog can also host your Express app for you
+	logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
 }

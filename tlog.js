@@ -4,7 +4,9 @@ const { Stream } = require('stream');
 const chalk = require('chalk');
 const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
-//#region Constants
+// Plugin imports
+const Express = require('./plugins/express');
+
 //#region // * Constants
 const STD = {
 	out: process.stdout,
@@ -20,6 +22,9 @@ const CHARS = {
 
 let OPTIONS = {
 	level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+	plugins: {
+		express: false
+	},
 	timestamp: {
 		enabled: true,
 		colour: 'white',
@@ -142,6 +147,36 @@ class TLog {
 		if (callback) callback(...args);
 		return this;
 	}
+
+	//#region// * Plugins
+
+	/**
+	 * Enable plugins
+	 * (tycrek: I see you, I know you want to write more JSDoc, but DON'T, it doesn't need it!)
+	 * @public
+	 */
+	enable = {
+		express: () => (this.#options.plugins.express && (this.#express = new Express(this)), this)
+	};
+
+	/**
+	 * @type {Express}
+	 * @see {@link Express}
+	 * @private
+	 */
+	#express = null;
+
+	/**
+	 * Express.js middleware
+	 * @param {boolean} [middleware] Set to true if this is being passed through app.use() (Optional, defaults to false)
+	 * @retun {(Express|Function)}
+	 * @public
+	 */
+	express(middleware = false) {
+		return middleware ? ((...args) => this.#express.use(...args)) : this.#express;
+	}
+	//#endregion
+
 	/**
 	 * The options the logger will use
 	 * @type {OPTIONS}
