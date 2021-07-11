@@ -2,6 +2,7 @@
 * For the Node.js process
 */
 
+const { mergeNoArray } = require('../deepMerge');
 const TLog = require('../tlog');
 const TITLE = 'Process';
 
@@ -103,11 +104,11 @@ class Process {
 	/**
 	 * Creates a new Process plugin, which handles some logging for the Node.js process
 	 * @param {TLog} tlog The parent logger instance
-	 * @param {OPTIONS} options The options to set
+	 * @param {OPTIONS} [options] The options to set
 	 */
 	constructor(tlog, options = OPTIONS) {
 		this.#tlog = tlog;
-		this.#options = Object.assign({}, OPTIONS, options);
+		this.#options = mergeNoArray(OPTIONS, options);
 	}
 
 	/**

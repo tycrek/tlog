@@ -1,6 +1,7 @@
 const C = console;
 const { DateTime } = require('luxon');
 const { Stream } = require('stream');
+const { mergeNoArray } = require('./deepMerge');
 const chalk = require('chalk');
 
 // Plugin imports
@@ -166,7 +167,7 @@ class TLog {
 		return this;
 	}
 
-	//#region// * Plugins
+	//#region // * Plugins
 
 	/**
 	 * @type {Process}
@@ -228,7 +229,7 @@ class TLog {
 	 * @param {OPTIONS} {@link OPTIONS options} The options to use
 	 */
 	constructor(options = OPTIONS) {
-		this.#options = Object.assign({}, OPTIONS, options);
+		this.#options = mergeNoArray(OPTIONS, options);
 	}
 
 	/**

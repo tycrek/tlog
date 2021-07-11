@@ -4,6 +4,7 @@
 
 const TLog = require('../tlog');
 const chalk = require('chalk');
+const { mergeNoArray } = require('../deepMerge');
 
 const TITLE = 'Express';
 const OPTIONS = {};
@@ -38,11 +39,11 @@ class Express {
 	/**
 	 * Creates a new Express.js logging middleware plugin
 	 * @param {TLog} tlog The parent logger instance
-	 * @param {OPTIONS} options The options to set
+	 * @param {OPTIONS} [options] The options to set
 	 */
-	constructor(tlog, options) {
+	constructor(tlog, options = OPTIONS) {
 		this.#tlog = tlog;
-		this.#options = Object.assign({}, OPTIONS, options);
+		this.#options = mergeNoArray(OPTIONS, options);
 	}
 
 	/**
