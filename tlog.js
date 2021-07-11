@@ -134,21 +134,23 @@ class TLog {
 
 	//#region Console exposure
 	/**
-	 * Staticly exposed console, in case you wanted to use it
+	 * Staticly exposed console, in case you wanted to use it.
+	 * Can also be accessed through the alias c.
 	 * @readonly
 	 * @public
 	 * @static
 	 */
-	static console = C;
-	static c = C;
+	static get console() { return C; }
+	static get c() { return C; }
 
 	/**
-	 * Non-static exposed console, in case you wanted to call it from your TLog instance
+	 * Non-static exposed console, in case you wanted to call it from your TLog instance.
+	 * Can also be accessed through the alias c.
 	 * @readonly
 	 * @public
 	 */
-	console = C;
-	c = C;
+	get console() { return C; }
+	get c() { return C; }
 	//#endregion
 
 	/**

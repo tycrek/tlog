@@ -180,6 +180,8 @@ function test() {
 		.null(aBetterLoggingTool, 'A logging tool better than this')
 		.null(somethingElseIdfk, 'Something else I don-')
 		.blank()
+		.c.log('lol')
+	TLog.console.log('lmao');
 
 
 	logger.blank().blank().blank();
