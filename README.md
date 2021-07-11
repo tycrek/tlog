@@ -268,9 +268,6 @@ logger.enable.process()
 The Express plugin lets you easily log request data. It's available as both middleware & as standalone functions.
 
 ```js
-// Activate the Express plugin
-const logger = new TLog({plugins: {express: true}});
-
 // Enable the plugin
 logger.enable.express().debug('Express middleware enabled');
 

@@ -190,7 +190,7 @@ function testExpress() {
 	const app = require('express')();
 
 	// Create the logger
-	const logger = new TLog({ plugins: { express: true } });
+	const logger = new TLog();
 
 	// Enable the Express plugin
 	logger.enable.express().debug('Express logs active');
