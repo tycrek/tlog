@@ -234,7 +234,7 @@ function testExpress2() {
 	app.use((req, res, next) => logger.debug(req.url.length).callback(next));
 
 	// tlog can also host your Express app for you
-	logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
+	//logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
 }
 
 // Since you create a new instance of TLog, you can create multiple loggers for different contexts
