@@ -2,7 +2,6 @@ const C = console;
 const { DateTime } = require('luxon');
 const { Stream } = require('stream');
 const chalk = require('chalk');
-const AvailableColours = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'];
 
 // Plugin imports
 const Process = require('./plugins/process');
@@ -107,14 +106,31 @@ function werr(...args) {
 //#endregion
 
 class TLog {
+	//#region // * Static exposures
 	/**
-	 * The colours users can set
-	 * @see {@link AvailableColours}
+	 * Chalk, in case the user wants to use cool colours
+	 * @type {chalk}
+	 * @see {@link https://github.com/chalk/chalk Chalk GitHub}
+	 * @see {@link https://github.com/chalk/chalk#colors Chalk colours}
+	 * @see {@link chalk Chalk}
 	 * @readonly
 	 * @public
 	 * @static
 	 */
-	static AvailableColours = AvailableColours;
+	static get chalk() { return chalk; }
+
+	/**
+	 * Chalk, in case the user wants to use cool colours.
+	 * This property is also available staticly.
+	 * @type {chalk}
+	 * @see {@link https://github.com/chalk/chalk Chalk GitHub}
+	 * @see {@link https://github.com/chalk/chalk#colors Chalk colours}
+	 * @see {@link chalk Chalk}
+	 * @readonly
+	 * @public
+	 */
+	get chalk() { return chalk; }
+	//#endregion
 
 	//#region Console exposure
 	/**

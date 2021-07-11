@@ -229,6 +229,10 @@ Calls the provided `callback` with the provided `args`. `callback` must be a fun
 
 Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).
 
+### `logger.chalk` & `TLog.chalk`
+
+In case the user wants to use [chalk][chalk], this is available as a static property on the `TLog` class or as an instance property on the `logger` instance.
+
 ## Plugins
 
 Some packages allow you to hook into the logging system. Developers can make plugins that make this easier to use. tlog comes with a **Process** plugin & an **[Express]** plugin.
