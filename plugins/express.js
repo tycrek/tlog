@@ -10,6 +10,17 @@ const OPTIONS = {};
 const LABEL = (colour = 'green') => chalk[colour].inverse(`[${TITLE}]`);
 const code2colour = { 1: 'cyan', 2: 'green', 3: 'cyan', 4: 'yellow', 5: 'red' };
 
+/**
+ * Trim a String to a maximum length & append a suffix if it's too long
+ * @param {string} str The String to trim
+ * @returns {string} The trimmed String
+ */
+function trimString(str) {
+	const max = 80;
+	const suffix = '...';
+	return str.length < max ? str : str.substring(0, (max - suffix.length) / 2) + suffix + str.substring((str.length - max / 2) + 1);
+}
+
 class Express {
 	/**
 	 * @type {TLog}
@@ -58,7 +69,7 @@ class Express {
 	Host(app, port, host, callback = null) {
 		// 404 Handler
 		app.use((req, res, _next) =>
-			this.#tlog.log(this.#buildExpressLog('Not found', req.url, '404', 'yellow')).callback(() => res.sendStatus(404)));
+			this.#tlog.log(this.#buildExpressLog('Not found', trimString(req.url), '404', 'yellow')).callback(() => res.sendStatus(404)));
 
 		// 500 Handler
 		app.use((err, _req, res, _next) =>
@@ -82,7 +93,7 @@ class Express {
 	 * @public
 	 */
 	use(req, res, next) {
-		this.#tlog.log(this.#buildExpressLog(`HTTP ${req.method}`, req.url));
+		this.#tlog.log(this.#buildExpressLog(`HTTP ${req.method}`, trimString(req.url)));
 		res.on('finish', () => this.#tlog.log(this.#buildExpressLog('Response', res.statusCode, undefined, code2colour[`${res.statusCode}`.slice(0, 1)])));
 		next();
 	}

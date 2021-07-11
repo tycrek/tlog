@@ -63,8 +63,8 @@ function testBasic() {
  * @returns {void}
  */
 function test() {
-	const logger = new TLog({ plugins: { process: true }, timestamp: { enabled: false } });
-	logger.enable.process().debug('Process logger enabled');
+	const logger = new TLog({ timestamp: { enabled: false } });
+	//logger.enable.process({ unhandledRejection: false }).debug('Process logger enabled');
 	let aBetterLoggingTool;
 	let somethingElseIdfk = null;
 
@@ -212,7 +212,7 @@ function testExpress() {
 
 function testExpress2() {
 	// Activate the Express plugin
-	const logger = new TLog({ plugins: { process: true, express: true } });
+	const logger = new TLog();
 
 	// Enable the plugin
 	logger.enable.process().debug('Process logger enabled');
@@ -231,6 +231,7 @@ function testExpress2() {
 	app.get('/continue', (req, res) => res.status(100).send('Continue'));
 	app.get('/fail', (req, res) => res.send('This variable does not exist: ' + haha));
 	app.get('/pfail', (req, res) => new Promise((resolve, reject) => reject(new Error('Failed to complete request!'))));
+	app.use((req, res, next) => logger.debug(req.url.length).callback(next));
 
 	// tlog can also host your Express app for you
 	logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
@@ -245,4 +246,4 @@ testBasic();
 test(new TLog(DEFAULTS));
 //test(new TLog(T1));
 //testExpress();
-//testExpress2();
+testExpress2();
