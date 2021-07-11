@@ -10,13 +10,14 @@ const DEFAULTS = {
 	label: {
 		enabled: true,
 		pad: true,
-		case: 'upper'
+		case: 'upper', // upper, lower
+		align: 'left' // left, right
 	},
 	title: {
 		delim: ': '
 	},
 	extra: {
-		prefix: ' (',
+		prefix: '(',
 		suffix: ')'
 	},
 	comments: {
@@ -36,13 +37,14 @@ const T1 = {
 	label: {
 		enabled: true,
 		pad: false,
-		case: 'lower'
+		case: 'lower', // upper, lower
+		align: 'left' // left, right
 	},
 	title: {
 		delim: ' -- '
 	},
 	extra: {
-		prefix: ' {{',
+		prefix: '{{',
 		suffix: '}}'
 	},
 	comments: {
@@ -63,7 +65,7 @@ function testBasic() {
  * @returns {void}
  */
 function test() {
-	const logger = new TLog({ timestamp: { enabled: false } });
+	const logger = new TLog({ timestamp: { colour: 'green' }, label: { align: 'right' } });
 	//logger.enable.process({ unhandledRejection: false }).debug('Process logger enabled');
 	let aBetterLoggingTool;
 	let somethingElseIdfk = null;
@@ -244,7 +246,7 @@ const TLog = require('../tlog');
 //const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
 //const logger = new TLog(); // Use default settings
 
-testBasic();
+//testBasic();
 test(new TLog(DEFAULTS));
 //test(new TLog(T1));
 //testExpress();

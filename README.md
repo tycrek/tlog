@@ -56,13 +56,14 @@ const options = {
     label: {
         enabled: true,
         pad: true,
-        case: 'upper'
+        case: 'upper', // upper, lower
+        align: 'left' // left, right
     },
     title: {
         delim: ': '
     },
     extra: {
-        prefix: ' (',
+        prefix: '(',
         suffix: ')'
     },
     comments: {
@@ -84,8 +85,9 @@ You can include or omit as many options in the constructor as you like. Anything
 | `timestamp.preset` | Overrides the [preset][Luxon prefix] of the timestamp | `string` | `null` |
 | `timestamp.format` | Overrides the [format][Luxon format] of the timestamp. If both `preset` & `format` are set, `format` takes precedence. | `string` | `null` |
 | `label.enabled` | Enables the label | `boolean` | `true` |
-| `label.pad` | Pads the label to the right | `boolean` | `true` |
+| `label.pad` | Pads the label to `label.align` | `boolean` | `true` |
 | `label.case` | Sets the case of the label. Must be either `upper` or `lower`. | `string` | `'upper'` |
+| `label.align` | Sets the alignment of the label. Must be either `left` or `right`. | `string` | `'left'` |
 | `title.delim` | Sets the delimiter between the title & the message | `string` | `': '` |
 | `extra.prefix` | Sets the prefix for the extra data | `string` | `' ('` |
 | `extra.suffix` | Sets the suffix for the extra data | `string` | `')'` |

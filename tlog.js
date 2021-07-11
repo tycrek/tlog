@@ -32,13 +32,14 @@ let OPTIONS = {
 	label: {
 		enabled: true,
 		pad: true,
-		case: 'upper'
+		case: 'upper', // upper, lower
+		align: 'left' // left, right
 	},
 	title: {
 		delim: ': '
 	},
 	extra: {
-		prefix: ' (',
+		prefix: '(',
 		suffix: ')'
 	},
 	comments: {
@@ -268,8 +269,12 @@ class TLog {
 	#getLabel(level) {
 		const label = this.#options.label;
 		return label.enabled
-			? chalk[LOG.COLOURS[level]].inverse(LOG.TITLES[level][label.case === 'upper' ? 'toUpperCase' : 'toLowerCase']()) + (label.pad ? LOG.SPACES[level] : CHARS.SPACE)
+			? getPadding('right') + chalk[LOG.COLOURS[level]].inverse(LOG.TITLES[level][label.case === 'upper' ? 'toUpperCase' : 'toLowerCase']()) + getPadding('left')
 			: CHARS.EMPTY;
+
+		function getPadding(align) {
+			return label.align === align && label.pad ? LOG.SPACES[level] : CHARS.SPACE;
+		}
 	}
 
 	/**
@@ -304,7 +309,7 @@ class TLog {
 	 * @private
 	 */
 	#getExtra(level, extra) {
-		return chalk[LOG.COLOURS[level]].italic(extra ? `${this.#options.extra.prefix}${extra}${this.#options.extra.suffix}` : CHARS.EMPTY);
+		return chalk[LOG.COLOURS[level]].italic(extra ? `${CHARS.SPACE}${this.#options.extra.prefix}${extra}${this.#options.extra.suffix}` : CHARS.EMPTY);
 	}
 
 	/**
