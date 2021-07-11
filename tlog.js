@@ -23,10 +23,6 @@ const CHARS = {
 
 let OPTIONS = {
 	level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
-	plugins: {
-		process: false,
-		express: false
-	},
 	timestamp: {
 		enabled: true,
 		colour: 'white',
@@ -176,19 +172,19 @@ class TLog {
 	 */
 	enable = {
 		/**
-		 * Activates the {@link Process} plugin
+		 * Enables the {@link Process} plugin
 		 * @param {Process.DEFAULT_OPTIONS} [options] The options to use (Optional)
 		 * @chainable
 		 * @return {TLog} This instance of TLog
 		 */
-		process: (options) => (this.#options.plugins.process && (this.#process = new Process(this, options)) && this.#process.listen(), this),
+		process: (options) => ((this.#process = new Process(this, options)) && this.#process.listen(), this),
 
 		/**
-		 * Activates the {@link Express} plugin
+		 * Enables the {@link Express} plugin
 		 * @chainable
 		 * @return {TLog} This instance of TLog
 		 */
-		express: () => (this.#options.plugins.express && (this.#express = new Express(this)), this)
+		express: () => ((this.#express = new Express(this)), this)
 	};
 
 	/**
