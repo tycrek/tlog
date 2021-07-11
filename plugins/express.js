@@ -19,7 +19,7 @@ class Express {
 
 	/**
 	 * This plugins options
-	 * @type {object}
+	 * @type {OPTIONS}
 	 * @private
 	 */
 	#options = {};
@@ -27,10 +27,11 @@ class Express {
 	/**
 	 * Creates a new Express.js logging middleware plugin
 	 * @param {TLog} tlog The parent logger instance
+	 * @param {OPTIONS} options The options to set
 	 */
-	constructor(tlog) {
+	constructor(tlog, options) {
 		this.#tlog = tlog;
-		this.#options = Object.assign({}, OPTIONS);
+		this.#options = Object.assign({}, OPTIONS, options);
 	}
 
 	/**
