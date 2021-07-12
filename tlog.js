@@ -134,7 +134,7 @@ class TLog {
 	get chalk() { return chalk; }
 	//#endregion
 
-	//#region Console exposure
+	//#region // * Console exposure
 	/**
 	 * Staticly exposed console, in case you wanted to use it.
 	 * Can also be accessed through the alias c.
@@ -196,6 +196,7 @@ class TLog {
 		 * @param {Process.DEFAULT_OPTIONS} [options] The options to use (Optional)
 		 * @chainable
 		 * @return {TLog} This instance of TLog
+		 * @see {@link Process}
 		 */
 		process: (options) => ((this.#process = new Process(this, options)) && this.#process.listen(), this),
 
