@@ -221,7 +221,7 @@ function testExpress2() {
 	// Enable the plugin
 	logger.enable.process().debug('Process logger enabled');
 	logger.enable.express().debug('Express middleware enabled');
-	logger.enable.socket().debug('Socket logger enabled');
+	//logger.enable.socket().debug('Socket logger enabled');
 
 	const app = require('express')();
 
