@@ -1,8 +1,8 @@
 // todo: documentation
 
 const net = require('net');
-const TLog = require('../tlog');
-const { SOCKET_PORT } = require('../MagicNumbers.json');
+const TLog = require('./tlog');
+const { SOCKET_PORT } = require('./MagicNumbers.json');
 
 const TITLE = 'SocketClient';
 const HOST = '127.0.0.1';
