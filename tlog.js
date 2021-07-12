@@ -7,6 +7,7 @@ const chalk = require('chalk');
 // Plugin imports
 const Process = require('./plugins/process');
 const Express = require('./plugins/express');
+const Socket = require('./plugins/socket');
 
 //#region // * Constants
 const STD = {
@@ -83,27 +84,32 @@ const LOG = {
 //#region // * Output functions
 /**
  * Write to stdout
+ * @param {TLog} tlog The instance of TLog calling this
  * @param {Stream} std The Stream to write to
  * @param {...*} args The objects to write
  */
-function w(std, ...args) {
+function w(tlog, std, ...args) {
 	std.write(args.join(CHARS.EMPTY).concat(CHARS.EOL));
+	if (tlog.socket !== null)
+		tlog.socket.broadcast(args.join(CHARS.EMPTY))
 }
 
 /**
  * Write to stdout
+ * @param {TLog} tlog The instance of TLog calling this
  * @param {...*} args The objects to write
  */
-function wout(...args) {
-	w(STD.out, ...args);
+function wout(tlog, ...args) {
+	w(tlog, STD.out, ...args);
 }
 
 /**
  * Write to stderr
+ * @param {TLog} tlog The instance of TLog calling this
  * @param {...*} args The objects to write
  */
-function werr(...args) {
-	w(STD.err, ...args);
+function werr(tlog, ...args) {
+	w(tlog, STD.err, ...args);
 }
 //#endregion
 
@@ -185,6 +191,13 @@ class TLog {
 	#express = null;
 
 	/**
+	 * @type {Socket}
+	 * @see {@link Socket}
+	 * @public
+	 */
+	socket = null;
+
+	/**
 	 * Enable plugins
 	 * (tycrek: I see you, I know you want to write more JSDoc, but DON'T, it doesn't need it!)
 	 * @public
@@ -202,10 +215,21 @@ class TLog {
 
 		/**
 		 * Enables the {@link Express} plugin
+		 * @param {object} [options] The options to use (Optional)
 		 * @chainable
 		 * @return {TLog} This instance of TLog
+		 * @see {@link Express}
 		 */
-		express: () => ((this.#express = new Express(this)), this)
+		express: (options) => ((this.#express = new Express(this, options)), this),
+
+		/**
+		 * Enables the {@link Socket} plugin
+		 * @param {Socket.DEFAULT_OPTIONS} [options] The options to use (Optional)
+		 * @chainable
+		 * @return {TLog} This instance of TLog
+		 * @see {@link Socket}
+		 */
+		socket: (options) => ((this.socket = new Socket(this, options)) && this.socket.listen(), this)
 	};
 
 	/**
@@ -325,7 +349,7 @@ class TLog {
 	 */
 	#log(level, title, message, extra) {
 		if (LOG.LEVELS[level] >= LOG.LEVELS[this.#options.level])
-			(level === 'warn' || level === 'error' ? werr : wout)(
+			(level === 'warn' || level === 'error' ? werr : wout)(this,
 				`${this.#getTimestamp()}` +
 				`${this.#getLabel(level)}` +
 				`${this.#getTitle(level, title, message)}` +
@@ -344,7 +368,7 @@ class TLog {
 	 * @chainable
 	 */
 	#utilLog(title, data, extra) {
-		wout(chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
+		wout(this, chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
 		return this;
 	}
 
@@ -356,7 +380,7 @@ class TLog {
 	 * @chainable
 	 */
 	log(...args) {
-		wout(this.#getTimestamp(), ...args);
+		wout(this, this.#getTimestamp(), ...args);
 		return this;
 	}
 
@@ -370,7 +394,7 @@ class TLog {
 	 */
 	err(...args) {
 		const lastArg = args[args.length - 1];
-		werr(...((lastArg instanceof Error) ? args.slice(0, -1).concat(lastArg.stack) : args));
+		werr(this, ...((lastArg instanceof Error) ? args.slice(0, -1).concat(lastArg.stack) : args));
 		return this;
 	}
 
@@ -445,7 +469,7 @@ class TLog {
 	 * @chainable
 	 */
 	comment(message) {
-		wout(chalk[this.#options.comments.colour](`${this.#options.comments.char} ${message}`));
+		wout(this, chalk[this.#options.comments.colour](`${this.#options.comments.char} ${message}`));
 		return this;
 	}
 
@@ -668,7 +692,7 @@ class TLog {
 	 * @chainable
 	 */
 	blank() {
-		wout();
+		wout(this);
 		return this;
 	}
 
@@ -679,7 +703,7 @@ class TLog {
 	 * @chainable
 	 */
 	clear() {
-		wout(`${CHARS.ESCAPE}[2J${CHARS.ESCAPE}[H`);
+		wout(this, `${CHARS.ESCAPE}[2J${CHARS.ESCAPE}[H`);
 		return this;
 	}
 }

@@ -237,7 +237,7 @@ In case the user wants to use [chalk][chalk], this is available as a static prop
 
 ## Plugins
 
-Some packages allow you to hook into the logging system. Developers can make plugins that make this easier to use. tlog comes with a **Process** plugin & an **[Express]** plugin.
+Some packages allow you to hook into the logging system. Developers can make plugins that make this easier to use. tlog comes with **Process**, **[Express]**, & **[Socket]** plugins.
 
 ### `logger.enable.[plugin]()`
 
@@ -293,7 +293,7 @@ app.get('/', (req, res) => {
 });
 
 // tlog can also host your Express app for you
-logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
+logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts a callback parameter
 ```
 
 #### `logger.express(true)`
@@ -316,6 +316,15 @@ Prints the user agent of the request.
 
 Prints the value of the specified header from the request.
 
+### Socket
+
+The Socket plugin hosts a tiny [Node Socket server] for viewing live logs.
+
+```js
+// Enable the Socket plugin
+logger.enable.socket().debug('Socket plugin enabled');
+```
+
 # Colours.
 
 **Colours**. I am **Canadian**. It is **colours**. If you don't like it, go **fork** yourself.
@@ -336,3 +345,4 @@ Prints the value of the specified header from the request.
 [process events]: https://nodejs.org/api/process.html#process_process_events
 [process exception callback]: https://nodejs.org/api/process.html#process_process_setuncaughtexceptioncapturecallback_fn
 [termination signals]: https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
+[Node Socket server]: https://nodejs.org/api/net.html#net_class_net_server
