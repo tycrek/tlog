@@ -55,7 +55,7 @@ const LOG = {
 		info: 200,
 		warn: 300,
 		error: 400,
-		success: 100
+		success: 300
 	},
 	COLOURS: {
 		debug: 'white',
