@@ -368,7 +368,7 @@ class TLog {
 	 * @chainable
 	 */
 	#utilLog(title, data, extra) {
-		wout(this, chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
+		wout(this, this.#getTimestamp(), chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
 		return this;
 	}
 
