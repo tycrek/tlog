@@ -71,22 +71,18 @@ class Socket {
 	 * @param {...*} [args] Arguments to pass to the callback (optional)
 	 */
 	listen(callback = null, ...args) {
-		this.#server = net.createServer({ allowHalfOpen: true }, (conn) => {
-			this.#tlog.debug(LOG_TITLE, 'Client connected', conn.remoteAddress);
-
-			// Set up connection listeners
-			conn.on('error', (err) => !err.message.includes('ECONNRESET') && C.error(LOG_TITLE, err));
-			conn.on('close', () => this.#tlog
-				.callback(() => this.#sockets.delete(conn.remoteAddress))
-				.debug(LOG_TITLE, 'Client disconnected'));
-
-			// Add connection to sockets map
-			this.#sockets.set(conn.remoteAddress, conn);
-		});
-
-		this.#server.listen(this.#options.port, this.#options.host, () => this.#tlog
-			.debug(LOG_TITLE, `Socket listening`)
-			.callback(() => callback && callback(...args)));
+		this.#server = net
+			.createServer({ allowHalfOpen: true })
+			.once('listening', () => this.#tlog.debug(LOG_TITLE, 'Listening').callback(() => callback && callback(...args)))
+			.on('error', (err) => this.#tlog.debug(LOG_TITLE, 'Encountered error').err(err))
+			.on('close', () => this.#tlog.debug(LOG_TITLE, 'Closing'))
+			.on('connection', (conn) => this.#tlog
+				.debug(LOG_TITLE, 'Client connected', conn.remoteAddress)
+				.callback(() => conn
+					.on('error', (err) => !err.message.includes('ECONNRESET') && C.error(LOG_TITLE, err))
+					.on('close', () => this.#tlog.callback(() => this.#sockets.delete(conn.remoteAddress)).debug(LOG_TITLE, 'Client disconnected')))
+				.callback(() => this.#sockets.set(conn.remoteAddress, conn)))
+			.listen(this.#options.port, this.#options.host);
 	}
 
 	/**
