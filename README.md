@@ -4,15 +4,15 @@
 
 My custom logger library. Uses [Chalk] for colours & [Luxon] for timestamps.
 
-### Features
+# Features
 
-- **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
 - **Colours, timestamps, & labels**
 - **Easily configurable:** just pass in an object with your custom settings
 - **Method chaining:** useful for attaching quick debug logs to existing logs
 - **Utility logs:** print short info snippets to aid debugging
 - **Comments:** comment your log outputs! I'm a little addicted to comments...
 - **Plugins:** easily integrate pre-built loggers with existing code
+- **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
 
 | Code | Result |
 | ---- | ------ |
@@ -140,102 +140,43 @@ Prints the arguments to `stdout` & `stderr` respectively (neither wrap `console.
 
 ## Utility logs
 
-I wrote these utility methods to make certain things quicker to debug, depending what it is I was debugging. Especially helpful when combined with chaining.
-### `logger.comment(message)`
+I wrote these utility methods to make certain things quicker to debug. Especially helpful when combined with chaining.
 
-Prints a comment-style log.
-
-### `logger.typeof(object, title)`
-
-Prints the type of the specified object. Title is optional, defaults to `'Typeof'`.
-
-### `logger.epoch()`
-
-Prints the current Unix epoch in milliseconds.
-
-### `logger.isTTY()`
-
-Prints if the current console is a TTY.
-
-### `logger.windowSize()`
-
-Prints the terminal size, in columns & rows.
-
-### `logger.pid()`
-
-Prints the current process ID.
-
-### `logger.cwd()`
-
-Prints the current working directory.
-
-### `logger.node()`
-
-Prints the Node.js version.
-
-### `logger.argv()`
-
-Prints the command line arguments.
-
-### `logger.env(key)`
-
-Prints the environment variables. `key` is optional.
-
-### `logger.stringify(object, title)`
-
-Prints the JSON stringified version of the provided `object`. Title is optional, defaults to `'Stringify'`.
-
-### `logger.uptime()`
-
-Prints the process uptime in seconds.
-
-### `logger.boolean(condition, title)`
-
-Prints the boolean evaluation of a `condition`. Title is optional, defaults to `'Boolean'`.
-
-### `logger.true(condition, message)`
-
-Only prints `message` if the `condition` is true.
-
-### `logger.false(condition, message)`
-
-Only prints `message` if the `condition` is false.
-
-### `ifElse(condition, messageIfTrue, messageIfFalse)`
-
-Prints `messageIfTrue` if the `condition` is true, `messageIfFalse` otherwise. Both are optional, defaults to `'True'` & `'False'` respectively.
-
-### `logger.null(variable, message)`
-
-Prints `message` if the `variable` is `null`. `message` is optional, defaults to `'Null'` or `'Undefined'`, depending on the value of `variable`. If `variable` is not `null` or `undefined`, nothing will be printed.
+| Method | Description |
+| --- | --- |
+| **`.cwd()`** | Prints the current working directory. |
+| **`.pid()`** | Prints the current process ID. |
+| **`.argv()`** | Prints the command line arguments. |
+| **`.node()`** | Prints the Node.js version. |
+| **`.epoch()`** | Prints the current Unix epoch in milliseconds. |
+| **`.isTTY()`** | Prints if the current console is a TTY. |
+| **`.uptime()`** | Prints the process uptime in seconds. |
+| **`.windowSize()`** | Prints the terminal size, in columns & rows. |
+| **`.env(key)`** | Prints the environment variables. `key` is optional. |
+| **`.comment(message)`** | Prints a comment-style log. |
+| **`.typeof(object, title)`** | Prints the type of the specified object. Title is optional, defaults to `'Typeof'`. |
+| **`.stringify(object, title)`** | Prints the JSON stringified version of the provided `object`. Title is optional, defaults to `'Stringify'`. |
+| **`.boolean(condition, title)`** | Prints the boolean evaluation of a `condition`. Title is optional, defaults to `'Boolean'`. |
+| **`.true(condition, message)`** | Only prints `message` if the `condition` is true. |
+| **`.false(condition, message)`** | Only prints `message` if the `condition` is false. |
+| **`.ifElse(condition, msgTrue, msgFalse)`** | Prints `msgTrue` if the `condition` is true, `msgFalse` otherwise. Both are optional, defaults to `'True'` & `'False'` respectively. |
+| **`.null(variable, message)`** | Prints `message` if the `variable` is `null`. `message` is optional, defaults to `'Null'` or `'Undefined'`, depending on the value of `variable`. If `variable` is not `null` or `undefined`, nothing will be printed. |
 
 ## Invisible utility logs
 
-These methods mostly write certain whitespace to `stdout`, to allow for easy debugging.
+These methods mostly write certain whitespace to `stdout`.
 
-### `logger.blank()`
-
-Prints a blank line.
-
-### `logger.clear()`
-
-Clears the console using Unicode escape sequences. May behave differently on different platforms.
-
-### `logger.callback(callback, ...args)`
-
-Calls the provided `callback` with the provided `args`. `callback` must be a function; `args` are optional.
-
-### `logger.console`
-
-Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`).
-
-### `logger.chalk` & `TLog.chalk`
-
-In case the user wants to use [chalk][chalk], this is available as a static property on the `TLog` class or as an instance property on the `logger` instance.
+| Method | Description |
+| --- | --- |
+| **`.blank()`** | Prints a blank line. |
+| **`.clear()`** | Clears the console using Unicode escape sequences. May behave differently on different platforms. |
+| **`.callback(callback, ...args)`** | Calls the provided `callback` with the provided `args`. `callback` must be a function; `args` are optional. |
+| **`.console`** | Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`). |
+| **`.chalk`** & **`TLog.chalk`** | In case the user wants to use [chalk][chalk], this is available as a static property on the `TLog` class or as an instance property on the `logger` instance. |
 
 ## Plugins
 
-Some packages allow you to hook into the logging system. Developers can make plugins that make this easier to use. tlog comes with **Process**, **[Express]**, & **[Socket]** plugins.
+Plugins are optional features that you can enable & configure in one go. tlog comes with **[Process](#process)**, **[Express](#express)**, & **[Socket](#socket)** plugins.
 
 ### `logger.enable.[plugin]()`
 
