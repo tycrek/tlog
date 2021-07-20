@@ -43,39 +43,7 @@ const logger2 new TLog({
 
 ## Options
 
-These are the default options:
-```js
-const options = {
-    level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
-    timestamp: {
-        enabled: true,
-        colour: 'white',
-        preset: null,
-        format: null
-    },
-    label: {
-        enabled: true,
-        pad: true,
-        case: 'upper', // upper, lower
-        align: 'left' // left, right
-    },
-    title: {
-        delim: ': '
-    },
-    extra: {
-        prefix: '(',
-        suffix: ')'
-    },
-    comments: {
-        char: '//',
-        colour: 'grey'
-    }
-};
-```
-
-You can include or omit as many options in the constructor as you like. Anything omitted will use the default.
-
-### Available options
+You can include or omit as many options in the TLog constructor as you like. Anything omitted will use the default. Options delimited by `.` will be merged into an object of the same name.
 
 | Option | Description | Type | Default |
 | --- | --- | --- | --- |
@@ -94,23 +62,44 @@ You can include or omit as many options in the constructor as you like. Anything
 | `comments.char` | Sets the comment character | `string` | `'//'` |
 | `comments.colour` | Sets the [colour][available colours] of the comment | `string` | `'grey'` |
 
-### Available colours
+### Changing options
 
-From the [Chalk Style docs]:
+Pass an object of options to the constructor to change any options.
 
-- `black`
-- `red`
-- `green`
-- `yellow`
-- `blue`
-- `magenta`
-- `cyan`
-- `white`
-- `gray`
+<table>
+<tr>
+<th>Code</th>
+<th>Output</th>
+</tr>
+<tr>
+<td>
+
+```js
+// For example
+const logger = new TLog({
+    level: 'warn',
+    timestamp: {
+        enabled: false
+    },
+    label: {
+        case: 'lower',
+        align: 'right'
+    }
+});
+```
+</td>
+<td>
+
+![a](https://jmoore.dev/files/Code_M3VSYthl63.png)
+</td>
+</tr>
+</table>
+
+Some options also accept colours. See the [Chalk docs] for info.
 
 # API
 
-All API methods return the logger instance, allowing for method chaining (with the exception of `.console`). Some helper functions are also provided.
+All API methods return the logger instance, allowing for method chaining (with the exception of `.console` & `.chalk`).
 
 ## General log methods
 
@@ -118,27 +107,36 @@ All API methods return the logger instance, allowing for method chaining (with t
 
 Prints a log at the specified level. `title` & `extra` are optional.
 
-Levels can be one of:
+<table>
+<tr>
+<th>Levels</th>
+<th>Parameters</th>
+</tr>
+<tr>
+<td>
 
-- `debug`
-- `info`
-- `warn`
-- `error`
-- `success`
+| Level | Weight |
+| --- | --- |
+| `debug` | `100` |
+| `info` | `200` |
+| `warn` | `300` |
+| `error` | `400` |
+| `success` | `300` |
+</td>
+<td>
 
 | Parameter | Description |
 | --- | --- |
 | `title` | The title of the log |
 | `message` | The message of the log |
 | `extra` | Any extra data to be printed with the log |
+</td>
+</tr>
+</table>
 
-### `logger.log(...args)`
+### `logger.log(...args)` & `logger.err(...args)`
 
-Prints the arguments, just a simple log with a timestamp. Not wrapping `console.log` so can be chained with other methods.
-
-### `logger.err(...args)`
-
-Prints the arguments to `stderr`, just a simple log with a timestamp. Not wrapping `console.err` so can be chained with other methods. If the last argument is an error, it will be printed as an error, with the stack trace.
+Prints the arguments to `stdout` & `stderr` respectively (neither wrap `console.log` nor `console.error`). `.log` is just a simple log with a timestamp; `.err` prints the last argument as an error with the stack trace (if it's an error). Both can be chained with other methods.
 
 ## Utility logs
 
@@ -338,7 +336,7 @@ logger.enable.socket().debug('Socket plugin enabled');
 [log level]: #loggerleveltitle-message-extra
 [ISO8601 format]: https://en.wikipedia.org/wiki/ISO_8601
 [available colours]: #available-colours
-[Chalk Style docs]: https://www.npmjs.com/package/chalk/v/1.0.0#styles
+[Chalk docs]: https://www.npmjs.com/package/chalk/v/1.0.0#colors
 [Luxon prefix]: https://moment.github.io/luxon/#/formatting?id=presets
 [Luxon format]: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
 [Express]: (http://expressjs.com/)
