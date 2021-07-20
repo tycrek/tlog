@@ -179,9 +179,9 @@ Prints the Node.js version.
 
 Prints the command line arguments.
 
-### `logger.env()`
+### `logger.env(key)`
 
-Prints the environment variables.
+Prints the environment variables. `key` is optional.
 
 ### `logger.stringify(object, title)`
 
