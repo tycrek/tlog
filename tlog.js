@@ -298,7 +298,7 @@ class TLog {
 			: CHARS.EMPTY;
 
 		function getPadding(align) {
-			return label.align === align && label.pad ? LOG.SPACES[level] : CHARS.SPACE;
+			return label.align === align && label.pad ? LOG.SPACES[level] : CHARS.EMPTY;
 		}
 	}
 
@@ -351,7 +351,7 @@ class TLog {
 		if (LOG.LEVELS[level] >= LOG.LEVELS[this.#options.level])
 			(level === 'warn' || level === 'error' ? werr : wout)(this,
 				`${this.#getTimestamp()}` +
-				`${this.#getLabel(level)}` +
+				`${this.#getLabel(level)}` + CHARS.SPACE +
 				`${this.#getTitle(level, title, message)}` +
 				`${this.#getMessage(level, title, message)}` +
 				`${(extra != null) ? this.#getExtra(level, extra) : CHARS.EMPTY}`);
