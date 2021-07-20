@@ -6,13 +6,13 @@ My custom logger library. Uses [Chalk] for colours & [Luxon] for timestamps.
 
 ### Features
 
-- ✔️ **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
-- ✔️ **Colours, timestamps, & labels**
-- ✔️ **Easily configurable:** just pass in an object with your custom settings
-- ✔️ **Method chaining:** useful for attaching quick debug logs to existing logs
-- ✔️ **Utility logs:** print short info snippets to aid debugging
-- ✔️ **Comments:** comment your log outputs! I'm a little addicted to comments...
-- ✔️ **Plugins:** easily integrate pre-built loggers with existing code
+- **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
+- **Colours, timestamps, & labels**
+- **Easily configurable:** just pass in an object with your custom settings
+- **Method chaining:** useful for attaching quick debug logs to existing logs
+- **Utility logs:** print short info snippets to aid debugging
+- **Comments:** comment your log outputs! I'm a little addicted to comments...
+- **Plugins:** easily integrate pre-built loggers with existing code
 
 | Code | Result |
 | ---- | ------ |
