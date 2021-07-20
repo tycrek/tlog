@@ -74,7 +74,7 @@ class Socket {
 		this.#server = net
 			.createServer({ allowHalfOpen: true })
 			.once('listening', () => this.#tlog.debug(LOG_TITLE, 'Listening').callback(() => callback && callback(...args)))
-			.on('error', (err) => this.#tlog.debug(LOG_TITLE, 'Encountered error').err(err))
+			.on('error', (err) => err.message.includes('EADDRINUSE') ? this.#tlog.warn(LOG_TITLE, 'Port already in use on host, disabling Socket plugin').warn(`This warning can be ignored unless you know why it showed up. If you don't know why, just ignore it.`) : this.#tlog.debug(LOG_TITLE, 'Encountered error').err(err))
 			.on('close', () => this.#tlog.debug(LOG_TITLE, 'Closing'))
 			.on('connection', (conn) => this.#tlog
 				.debug(LOG_TITLE, 'Client connected', conn.remoteAddress)
