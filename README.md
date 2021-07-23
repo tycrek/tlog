@@ -1,4 +1,4 @@
-<center>
+<div align="center">
 
 tlog
 ===
@@ -6,7 +6,7 @@ tlog
 [![npm image]][npm page]
 
 *My custom logger library, using [Chalk] for colours & [Luxon] for timestamps*
-</center>
+</div>
 
 ---
 
