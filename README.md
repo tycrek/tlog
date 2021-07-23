@@ -1,18 +1,24 @@
-# tlog
+<center>
+
+tlog
+===
 
 [![npm image]][npm page]
 
-My custom logger library. Uses [Chalk] for colours & [Luxon] for timestamps.
+*My custom logger library, using [Chalk] for colours & [Luxon] for timestamps*
+</center>
+
+---
 
 # Features
 
-- **Colours, timestamps, & labels**
-- **Easily configurable:** just pass in an object with your custom settings
-- **Method chaining:** useful for attaching quick debug logs to existing logs
-- **Utility logs:** print short info snippets to aid debugging
-- **Comments:** comment your log outputs! I'm a little addicted to comments...
-- **Plugins:** easily integrate pre-built loggers with existing code
-- **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
+- 🌈 **Colours, timestamps, & labels**
+- 🔧 **Easily configurable:** just pass in an object with your custom settings
+- 🔗 **Method chaining:** useful for attaching quick debug logs to existing logs
+- ⚙ **Utility logs:** print short info snippets to aid debugging
+- 📝 **Comments:** comment your log outputs! I'm a little addicted to comments...
+- 🔌 **Plugins:** easily integrate pre-built loggers with existing code
+- 🚀 **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
 
 | Code | Result |
 | ---- | ------ |
@@ -264,7 +270,7 @@ The Socket plugin hosts a tiny [Node Socket server] for viewing live logs.
 logger.enable.socket().debug('Socket plugin enabled');
 ```
 
-# Colours.
+# 🍁 Colours.
 
 **Colours**. I am **Canadian**. It is **colours**. If you don't like it, go **fork** yourself.
 
