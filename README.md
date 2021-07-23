@@ -176,7 +176,7 @@ These methods mostly write certain whitespace to `stdout`.
 | **`.clear()`** | Clears the console using Unicode escape sequences. May behave differently on different platforms. |
 | **`.callback(callback, ...args)`** | Calls the provided `callback` with the provided `args`. `callback` must be a function; `args` are optional. |
 | **`.console`** | Exposes the `console` object for convenience. This is also available staticly on the `TLog` class. Both are also available under the alias `.c` (for example: `logger.c.log('Hello, console!')`). |
-| **`.chalk`** & **`TLog.chalk`** | In case the user wants to use [chalk][chalk], this is available as a static property on the `TLog` class or as an instance property on the `logger` instance. |
+| **`.chalk`** & **`TLog.chalk`**<br>**`.luxon`** & **`TLog.luxon`** | In case the user wants to use [Chalk] or [Luxon], these are available as static properties on the `TLog` class or as instance properties on the `logger` instance. |
 
 ## Plugins
 

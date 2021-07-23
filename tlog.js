@@ -27,8 +27,10 @@ let OPTIONS = {
 	timestamp: {
 		enabled: true,
 		colour: 'white',
-		preset: null, // https://moment.github.io/luxon/#/formatting?id=presets
-		format: null // https://moment.github.io/luxon/#/formatting?id=table-of-tokens
+		/** https://moment.github.io/luxon/#/formatting?id=presets */
+		preset: null,
+		/** https://moment.github.io/luxon/#/formatting?id=table-of-tokens */
+		format: null
 	},
 	label: {
 		enabled: true,
@@ -138,6 +140,29 @@ class TLog {
 	 * @public
 	 */
 	get chalk() { return chalk; }
+
+	/**
+	 * DateTime (from {@link https://moment.github.io/luxon/ Luxon}), useful for setting timestamp presets
+	 * @type {DateTime}
+	 * @see {@link https://moment.github.io/luxon/#/formatting?id=presets DateTime presets}
+	 * @see {@link DateTime}
+	 * @readonly
+	 * @public
+	 * @static
+	 * @example
+	 * const logger = new TLog({ timestamp: { preset: TLog.luxon.DATETIME_HUGE } });
+	 */
+	static get luxon() { return DateTime; }
+
+	/**
+	 * DateTime (from {@link https://moment.github.io/luxon/ Luxon}), useful for setting timestamp presets
+	 * @type {DateTime}
+	 * @see {@link https://moment.github.io/luxon/#/formatting?id=presets DateTime presets}
+	 * @see {@link DateTime}
+	 * @readonly
+	 * @public
+	 */
+	get luxon() { return DateTime; }
 	//#endregion
 
 	//#region // * Console exposure
@@ -279,7 +304,7 @@ class TLog {
 			? chalk[timestamp.colour](timestamp.format
 				? DateTime.now().toFormat(timestamp.format)
 				: timestamp.preset
-					? DateTime.now().toLocaleString(DateTime[timestamp.preset])
+					? DateTime.now().toLocaleString(DateTime[timestamp.preset] || timestamp.preset)
 					: DateTime.now().toISO())
 				.concat(CHARS.SPACE)
 			: CHARS.EMPTY;
