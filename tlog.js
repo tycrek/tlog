@@ -680,8 +680,7 @@ class TLog {
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined}
 	 */
 	null(variable, message) {
-		if (variable === null) this.#utilLog('Null', message || '');
-		else if (variable === undefined) this.#utilLog('Undefined', message || '');
+		this.#utilLog(variable === null ? 'Null' : variable === undefined ? 'Undefined' : 'NotNull', message || '');
 		return this;
 	}
 
