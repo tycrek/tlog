@@ -6,7 +6,7 @@ const chalk = require('chalk');
 
 // Plugin imports
 const Process = require('./plugins/process');
-const Express = require('./plugins/express');
+const { Express, OPTIONS: EXPRESS_DEFAULTS } = require('./plugins/express');
 const Socket = require('./plugins/socket');
 
 //#region // * Constants
@@ -215,7 +215,7 @@ class TLog {
 
 		/**
 		 * Enables the {@link Express} plugin
-		 * @param {object} [options] The options to use (Optional)
+		 * @param {EXPRESS_DEFAULTS} [options] The options to use (Optional)
 		 * @chainable
 		 * @return {TLog} This instance of TLog
 		 * @see {@link Express}

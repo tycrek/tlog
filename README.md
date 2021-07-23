@@ -218,7 +218,10 @@ The Express plugin lets you easily log request data. It's available as both midd
 
 ```js
 // Enable the plugin
-logger.enable.express().debug('Express middleware enabled');
+logger.enable.express().debug('Express', 'plugin enabled');
+
+// or pass options to the constructor (see below)
+logger.enable.express({ handle500: false }).debug('Express', 'plugin enabled', 'with options');
 
 // Tell Express to use the logger as middleware
 app.use(logger.express(true));
@@ -239,13 +242,20 @@ app.get('/', (req, res) => {
 logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts a callback parameter
 ```
 
+#### Options
+
+| Option | Description | Type | Default |
+| --- | --- | --- | --- |
+| `handle404` | Log 404 errors & return a 404 response | `boolean` | `true` |
+| `handle500` | Log 500 errors & return a 500 response | `boolean` | `true` |
+| `trim.enabled` | Enable/disable trimming for long paths | `boolean` | `true` |
+| `trim.max` | Trim long paths to this length | `number` | `80` |
+| `trim.delim` | Trimmed paths will be seperated by this string | `string` | `'...'` | 
+| `middleware.excludePaths` | Exclude paths from logging (uses Regex `.test()`) | `string[]` | `['favicon.ico']` |
+
 #### `logger.express(true)`
 
 Passes the middleware to Express. Only use as a parameter to `app.use()`.
-
-#### `logger.express().set(option, value)`
-
-Sets an option for the Express plugin. Chaining is supported (returns the Express plugin, **not** the logger)
 
 #### `logger.express().Host(app, port, host, callback)`
 

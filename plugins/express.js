@@ -4,10 +4,35 @@
 
 const TLog = require('../tlog');
 const chalk = require('chalk');
-const { mergeNoArray } = require('../deepMerge');
+const { merge } = require('../deepMerge');
 
 const TITLE = 'Express';
-const OPTIONS = {};
+/** Options to use with the Express plugin */
+const OPTIONS = {
+	/** Options to be used with the Express middleware (if used) */
+	middleware: {
+		/** Exclude these paths from logging. Some errors may still be logged. */
+		excludePaths: ['favicon.ico'],
+	},
+
+	/** Configure trimming for long paths */
+	trim: {
+		/** Enable/disable trimming. Defaults to true */
+		enabled: true,
+
+		/** Trim long paths to this length. Defaults to 80. */
+		max: 80,
+
+		/** Trimmed paths will be seperated by this string. Defaults to '...' */
+		delim: '...'
+	},
+
+	/** Enable/disable built-in 404 handler. Defaults to true */
+	handle404: true,
+
+	/** Enable/disable built-in 500 handler. Defaults to true */
+	handle500: true
+};
 const LABEL = (colour = 'green') => chalk[colour].inverse(`[${TITLE}]`);
 const code2colour = { 1: 'cyan', 2: 'green', 3: 'cyan', 4: 'yellow', 5: 'red' };
 
@@ -16,10 +41,8 @@ const code2colour = { 1: 'cyan', 2: 'green', 3: 'cyan', 4: 'yellow', 5: 'red' };
  * @param {string} str The String to trim
  * @returns {string} The trimmed String
  */
-function trimString(str) {
-	const max = 80;
-	const suffix = '...';
-	return str.length < max ? str : str.substring(0, (max - suffix.length) / 2) + suffix + str.substring((str.length - max / 2) + 1);
+function trimString(str, { enabled, max, delim }) {
+	return (!enabled) || str.length < max ? str : str.substring(0, (max - delim.length) / 2) + delim + str.substring((str.length - max / 2) + 1);
 }
 
 class Express {
@@ -43,7 +66,7 @@ class Express {
 	 */
 	constructor(tlog, options = OPTIONS) {
 		this.#tlog = tlog;
-		this.#options = mergeNoArray(OPTIONS, options);
+		this.#options = merge(OPTIONS, options);
 	}
 
 	/**
@@ -69,11 +92,11 @@ class Express {
 	 */
 	Host(app, port, host, callback = null) {
 		// 404 Handler
-		app.use((req, res, _next) =>
-			this.#tlog.log(this.#buildExpressLog('Not found', trimString(req.url), '404', 'yellow')).callback(() => res.sendStatus(404)));
+		this.#options.handle404 && app.use((req, res, _next) =>
+			this.#tlog.log(this.#buildExpressLog('Not found', trimString(req.url, this.#options.trim), '404', 'yellow')).callback(() => res.sendStatus(404)));
 
 		// 500 Handler
-		app.use((err, _req, res, _next) =>
+		this.#options.handle500 && app.use((err, _req, res, _next) =>
 			this.#tlog.log(this.#buildExpressLog('Response error', err, '500', 'red')).err(err).callback(() => res.sendStatus(500)));
 
 		// Host the Express app
@@ -94,8 +117,9 @@ class Express {
 	 * @public
 	 */
 	use(req, res, next) {
-		this.#tlog.log(this.#buildExpressLog(`HTTP ${req.method}`, trimString(req.url)));
-		res.on('finish', () => this.#tlog.log(this.#buildExpressLog('Response', res.statusCode, undefined, code2colour[`${res.statusCode}`.slice(0, 1)])));
+		const skip = (this.#options.middleware.excludePaths.findIndex((path) => new RegExp(path).test(req.url)) !== -1);
+		(!skip) && this.#tlog.log(this.#buildExpressLog(`HTTP ${req.method}`, trimString(req.url, this.#options.trim)));
+		(!skip) && res.on('finish', () => this.#tlog.log(this.#buildExpressLog('Response', res.statusCode, undefined, code2colour[`${res.statusCode}`.slice(0, 1)])));
 		next();
 	}
 
@@ -105,6 +129,7 @@ class Express {
 	 * @param {*} value The value to set the option to
 	 * @return {Express} For chaining Express plugin methods after setting an option, or for setting more options
 	 * @public
+	 * @deprecated Please use set options in enable.express({})
 	 */
 	set(option, value) {
 		this.#options[option] = value;
@@ -131,4 +156,7 @@ class Express {
 	}
 }
 
-module.exports = Express;
+module.exports = {
+	Express,
+	OPTIONS
+};

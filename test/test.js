@@ -220,7 +220,7 @@ function testExpress2() {
 
 	// Enable the plugin
 	logger.enable.process().debug('Process logger enabled');
-	logger.enable.express().debug('Express middleware enabled');
+	logger.enable.express({ middleware: { excludePaths: ['/fail'] }, trim: { max: 32, delim: '--' } }).debug('Express', 'plugin enabled', 'with options');
 	//logger.enable.socket().debug('Socket logger enabled');
 
 	const app = require('express')();
@@ -239,7 +239,7 @@ function testExpress2() {
 	app.use((req, res, next) => logger.debug('URL length', req.url.length).callback(next));
 
 	// tlog can also host your Express app for you
-	//logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts host & callback parameters
+	//logger.express().Host(app, 8030, '0.0.0.0'); // Also accepts a callback parameter
 }
 
 // Since you create a new instance of TLog, you can create multiple loggers for different contexts
