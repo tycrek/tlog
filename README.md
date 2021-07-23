@@ -8,8 +8,6 @@ tlog
 *My custom logger library, using [Chalk] for colours & [Luxon] for timestamps*
 </div>
 
----
-
 # Features
 
 - 🌈 **Colours, timestamps, & labels**
