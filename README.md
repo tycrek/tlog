@@ -271,7 +271,9 @@ Prints the value of the specified header from the request.
 
 ### Socket
 
-The Socket plugin hosts a tiny [Node Socket server] for viewing live logs.
+Please note this plugin is still in a work-in-progress & may not work as expected.
+
+The Socket plugin hosts a tiny [Node Socket server] for viewing live logs. This is useful for Node.js apps that run with Systemd, as `journalctl` doesn't support colour output (at least not without extra tweaking).
 
 ```js
 // Enable the Socket plugin
