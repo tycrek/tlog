@@ -24,22 +24,31 @@ tlog
 
 # Usage
 
-Install using `npm i @tycrek/log`, then `require` in your project:
+Install using **`npm i @tycrek/log`**, then `require` in your project:
 
 ```js
 // Set up logger with default options
 const TLog = require('@tycrek/log');
 const logger = new TLog();
+```
 
-// Prints an info log
+Prints an info log:
+
+```js
 logger.info('Hello, hell!');
+```
 
-// Methods return the logger instance, allowing for method chaining
+Methods return the logger instance, allowing for method chaining:
+
+```js
 logger
     .warn('Wait, why are we in hell?')
     .debug('Because we\'re not using industry standard logging libs!');
+```
 
-// You an also specify options for a new instance
+You an also specify options for a new instance by passing an object to the constructor:
+
+```js
 const logger2 new TLog({
     /* Options can be set here */
 });
