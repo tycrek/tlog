@@ -3,8 +3,6 @@
 tlog
 ===
 
-[![npm image]][npm page]
-
 *My custom logger library, using [Chalk] for colours & [Luxon] for timestamps*
 </div>
 
@@ -22,7 +20,17 @@ tlog
 | ---- | ------ |
 | ![demo code] | ![demo result] |
 
-# Usage
+[//]: # (GH PACKAGES TEMPLATE START)
+## Usage
+
+This package is installable from [GitHub Packages]. To use this package in your project, create an `.npmrc` file in the same directory as your project's `package.json` file with these contents:
+
+```
+@tycrek:registry=https://npm.pkg.github.com
+```
+
+[GitHub Packages]: https://github.com/features/packages
+[//]: # (GH PACKAGES TEMPLATE END)
 
 Install using **`npm i @tycrek/log`**, then `require` in your project:
 
@@ -293,8 +301,6 @@ logger.enable.socket().debug('Socket plugin enabled');
 
 **Colours**. I am **Canadian**. It is **colours**. If you don't like it, go **fork** yourself.
 
-[npm image]: https://img.shields.io/npm/v/@tycrek/log?color=%23CB3837&label=View%20on%20NPM&logo=npm&style=for-the-badge
-[npm page]: https://www.npmjs.com/package/@tycrek/log
 [Chalk]: https://github.com/chalk/chalk
 [Luxon]: https://moment.github.io/luxon
 [demo code]: https://ass.rip/cRxQTzM86G4R/direct
