@@ -57,7 +57,7 @@ logger
 You an also specify options for a new instance by passing an object to the constructor:
 
 ```js
-const logger2 new TLog({
+const logger2 = new TLog({
     /* Options can be set here */
 });
 ```
