@@ -6,7 +6,16 @@ const { SOCKET_PORT: PORT } = require('../MagicNumbers.json');
 
 const TITLE = 'Socket';
 const HOST = '127.0.0.1';
-const LOG_TITLE = `[${TITLE}:${HOST}:${PORT}]`;
+let LOG_TITLE = `[${TITLE}:${HOST}:${PORT}]`;
+
+/**
+ * Fixes the plugin log title.
+ * @param {string} host The user defined host.
+ * @param {numer} port The user defined port
+ */
+function setTitleHostPort(host, port) {
+	LOG_TITLE = `[${TITLE}:${host}:${port}]`;
+}
 
 /**
 * Default options for the Socket plugin
@@ -63,6 +72,9 @@ class Socket {
 	constructor(tlog, options = OPTIONS) {
 		this.#tlog = tlog;
 		this.#options = mergeNoArray(OPTIONS, options);
+
+		// Fix the log host and port
+		setTitleHostPort(this.#options.host, this.#options.port);
 	}
 
 	/**
