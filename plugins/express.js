@@ -7,6 +7,8 @@ const chalk = require('chalk');
 const { merge } = require('../deepMerge');
 
 const TITLE = 'EXPRESS';
+const SPACES = '  ';
+
 /** Options to use with the Express plugin */
 const OPTIONS = {
 	/** Options to be used with the Express middleware (if used) */
@@ -79,7 +81,7 @@ class Express {
 	 * @private
 	 */
 	#buildExpressLog(title, message, extra, colour = 'green') {
-		return `${LABEL(colour)} ${message ? chalk[colour].bold(title.concat(': ')) : ''}${message || ''} ${extra ? chalk.italic(`(${extra})`) : ''}`;
+		return `${LABEL(colour)}${SPACES}${message ? chalk[colour].bold(title.concat(': ')) : ''}${message || ''} ${extra ? chalk.italic(`(${extra})`) : ''}`;
 	}
 
 	/**
