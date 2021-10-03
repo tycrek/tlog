@@ -6,7 +6,7 @@ const TLog = require('../tlog');
 const chalk = require('chalk');
 const { merge } = require('../deepMerge');
 
-const TITLE = 'Express';
+const TITLE = 'EXPRESS';
 /** Options to use with the Express plugin */
 const OPTIONS = {
 	/** Options to be used with the Express middleware (if used) */

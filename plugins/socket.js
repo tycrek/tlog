@@ -4,7 +4,7 @@ const TLog = require('../tlog');
 const { mergeNoArray } = require('../deepMerge');
 const { SOCKET_PORT: PORT } = require('../MagicNumbers.json');
 
-const TITLE = 'Socket';
+const TITLE = 'SOCKET';
 const HOST = '127.0.0.1';
 let LOG_TITLE = `[${TITLE}:${HOST}:${PORT}]`;
 

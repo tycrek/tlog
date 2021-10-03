@@ -4,7 +4,7 @@
 
 const { mergeNoArray } = require('../deepMerge');
 const TLog = require('../tlog');
-const TITLE = 'Process';
+const TITLE = 'PROCESS';
 
 /**
  * Default options for the Process plugin
