@@ -1,3 +1,4 @@
 {
-	"SOCKET_PORT": 45375
+	"SOCKET_PORT": 45375,
+	"TAB_SIZE": 4
 }

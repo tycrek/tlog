@@ -3,6 +3,7 @@ const { DateTime } = require('luxon');
 const { Stream } = require('stream');
 const { mergeNoArray } = require('./deepMerge');
 const chalk = require('chalk');
+const { TAB_SIZE } = require('./MagicNumbers.json');
 
 // Plugin imports
 const Process = require('./plugins/process');
@@ -607,7 +608,7 @@ class TLog {
 	 * @see {@link https://nodejs.org/api/process.html#process_process_env}
 	 */
 	env(key) {
-		this.#utilLog(key ? `env.${key}` : 'Environment variables', key ? process.env[key] : process.env);
+		this.#utilLog(key === undefined ? 'Environment variables' : `env.${key}`, key === undefined ? JSON.stringify(process.env, null, TAB_SIZE) : process.env[key]);
 		return this;
 	}
 
