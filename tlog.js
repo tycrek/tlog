@@ -58,28 +58,36 @@ const LOG = {
 		info: 200,
 		warn: 300,
 		error: 400,
-		success: 300
+
+		success: 300,
+		utils: 200,
 	},
 	COLOURS: {
 		debug: 'white',
 		info: 'cyan',
 		warn: 'yellow',
 		error: 'red',
+
 		success: 'green',
+		utils: 'grey',
 	},
 	TITLES: {
 		debug: '[DEBUG]',
 		info: '[INFO]',
 		warn: '[WARN]',
 		error: '[ERROR]',
+
 		success: '[SUCCESS]',
+		utils: '[UTILS]',
 	},
 	SPACES: {
 		debug: '   ',
 		info: '    ',
 		warn: '    ',
 		error: '   ',
+
 		success: ' ',
+		utils: '   ',
 	}
 };
 //#endregion
@@ -394,7 +402,7 @@ class TLog {
 	 * @chainable
 	 */
 	#utilLog(title, data, extra) {
-		wout(this, this.#getTimestamp(), chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
+		wout(this, this.#getTimestamp(), this.#getLabel('utils').concat(CHARS.SPACE), chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
 		return this;
 	}
 
