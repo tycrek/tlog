@@ -608,7 +608,7 @@ class TLog {
 	 * @see {@link https://nodejs.org/api/process.html#process_process_env}
 	 */
 	env(key) {
-		this.#utilLog(key === undefined ? 'Environment variables' : `env.${key}`, key === undefined ? JSON.stringify(process.env, null, TAB_SIZE) : process.env[key]);
+		this.#utilLog(key === undefined ? 'Environment variables' : `env.${key}`, key === undefined ? JSON.stringify(process.env, null, TAB_SIZE) : process.env[key] ? process.env[key] : chalk.italic('undefined'));
 		return this;
 	}
 

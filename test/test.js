@@ -151,6 +151,8 @@ function test() {
 		.comment('Environment variables')
 		//.env() // Prints all environment variables
 		.env('PROCESSOR_IDENTIFIER')
+		.env('OS')
+		.env('Doesnt exist')
 		.blank()
 		.success('Hell yeah, we got some utility methods!')
 		.comment('Co-written by tycrek & GitHub CoPilot (including these docs & tests!')
