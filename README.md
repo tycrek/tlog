@@ -196,7 +196,7 @@ These methods mostly write certain whitespace to `stdout`.
 
 ## Plugins
 
-Plugins are optional features that you can enable & configure in one go. tlog comes with **[Process](#process)**, **[Express](#express)**, & **[Socket](#socket)** plugins.
+Plugins are optional features that you can enable & configure in one go. tlog comes with **[Process](#process)** and **[Express](#express)** plugins.
 
 ### `logger.enable.[plugin]()`
 
@@ -285,17 +285,6 @@ Prints the user agent of the request.
 
 Prints the value of the specified header from the request.
 
-### Socket
-
-Please note this plugin is still in a work-in-progress & may not work as expected.
-
-The Socket plugin hosts a tiny [Node Socket server] for viewing live logs. This is useful for Node.js apps that run with Systemd, as `journalctl` doesn't support colour output (at least not without extra tweaking).
-
-```js
-// Enable the Socket plugin
-logger.enable.socket().debug('Socket plugin enabled');
-```
-
 # 🍁 Colours.
 
 **Colours**. I am **Canadian**. It is **colours**. If you don't like it, go **fork** yourself.
@@ -314,4 +303,3 @@ logger.enable.socket().debug('Socket plugin enabled');
 [process events]: https://nodejs.org/api/process.html#process_process_events
 [process exception callback]: https://nodejs.org/api/process.html#process_process_setuncaughtexceptioncapturecallback_fn
 [termination signals]: https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
-[Node Socket server]: https://nodejs.org/api/net.html#net_class_net_server

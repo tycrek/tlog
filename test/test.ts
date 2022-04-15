@@ -1,3 +1,9 @@
+import { TLog } from '../dist/tlog';
+
+const logger = new TLog();
+logger.info('hi?').error(,);
+
+/*
 //#region Configs
 const DEFAULTS = {
 	level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
@@ -53,8 +59,6 @@ const T1 = {
 	}
 };
 
-//#endregion
-
 function testBasic() {
 	const logger = new TLog({});
 	logger.info('Hello', 'This is a basic test.');
@@ -63,7 +67,7 @@ function testBasic() {
 /**
  * @param {TLog} logger
  * @returns {void}
- */
+ /
 function test() {
 	const logger = new TLog({ timestamp: { colour: 'green' }, label: { align: 'right' } });
 	//logger.enable.process({ unhandledRejection: false }).debug('Process logger enabled');
@@ -249,8 +253,11 @@ const TLog = require('../tlog');
 //const logger = new TLog(DEFAULTS); // Options are set via object passed to constructor
 //const logger = new TLog(); // Use default settings
 
+//#endregion
+
 //testBasic();
-test(new TLog(DEFAULTS));
+// test(new TLog(DEFAULTS));
 //test(new TLog(T1));
 //testExpress();
-testExpress2();
+// testExpress2();
+*/
