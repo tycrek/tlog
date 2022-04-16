@@ -155,12 +155,15 @@ export class TLog {
 	}
 
 	/**
-	 * Express.js middleware. Set `middleware` to true if this is being passed through app.use() (Optional, defaults to false)
+	 * Express.js plugin
 	 */
 	public express() {
-		this.expressPlugin;
+		return this.expressPlugin;
 	}
 
+	/**
+	 * Express.js middleware
+	 */
 	public middleware() {
 		return (req: Request, res: Response, next: NextFunction) => this.expressPlugin!.use(req, res, next);
 	}
