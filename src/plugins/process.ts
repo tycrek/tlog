@@ -3,8 +3,8 @@
 */
 
 import { TLog } from '../tlog';
-import { tlog } from '../..';
 import { PROCESS_DEFAULTS } from '../Constants';
+import ProcessPluginOptions from './ProcessPluginOptions';
 
 const TITLE = 'PROCESS';
 
@@ -27,14 +27,14 @@ const EXIT_CODES = {
  * Automatically logs certain process events & signals
  * @class
  */
-class Process implements tlog.plugins.IPlugin {
+class Process {
 	tlog;
 	options;
 
 	/**
 	 * Handles some logging for the Node.js process
 	 */
-	constructor(tlog: TLog, options?: tlog.plugins.process.ProcessPluginOptions) {
+	constructor(tlog: TLog, options?: ProcessPluginOptions) {
 		this.tlog = tlog;
 		this.options = options ?? PROCESS_DEFAULTS; // todo: merge with defaults
 	}

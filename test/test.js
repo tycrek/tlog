@@ -1,7 +1,8 @@
-import { TLog } from '../dist/tlog';
-
+// import { TLog } from '../dist/tlog';
+const { TLog } = require('../dist/tlog');
 const logger = new TLog();
-logger.info('hi?').error(,);
+// logger.info('hi');
+logger.info('hi?').error('yo', 'awesome').debug('hi', 'hello', 'hey');
 
 /*
 //#region Configs

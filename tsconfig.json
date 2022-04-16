@@ -7,10 +7,12 @@
 		"lib": [
 			"ES2021"
 		],
-		"downlevelIteration": true
+		"downlevelIteration": true,
+		"declaration": true,
+		"declarationDir": "./dist",
+		"strictPropertyInitialization": false
 	},
 	"include": [
 		"src/**/*.ts",
-		"types.d.ts"
 	]
 }

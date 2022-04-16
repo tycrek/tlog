@@ -3,14 +3,13 @@
   "version": "0.5.9",
   "description": "tycrek's custom logger library",
   "main": "./dist/tlog.js",
-  "types": "./index.d.ts",
   "type": "commonjs",
   "engines": {
     "node": ">=16.14.x",
     "npm": ">=8.3.x"
   },
   "scripts": {
-    "build": "rm -dr ./dist/ && tsc",
+    "build": "rm -dr ./dist/ & tsc",
     "test": "node test/test.js",
     "socket": "node socketClient.js",
     "demo": "node test/demo.js",

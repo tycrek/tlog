@@ -3,10 +3,10 @@
 */
 
 import { TLog, getChalk } from '../tlog';
-import { tlog } from '../..';
 import { EXPRESS_DEFAULTS } from '../Constants';
 import { Express as E, NextFunction, Request, Response } from 'express';
 import chalk from 'chalk';
+import ExpressPluginOptions from './ExpressPluginOptions';
 
 const TITLE = 'EXPRESS';
 const SPACES = '  ';
@@ -20,11 +20,11 @@ function trimString(str: string, { enabled, maxLength, delim }: { enabled: boole
 	return (!enabled) || str.length < maxLength ? str : str.substring(0, (maxLength - delim.length) / 2) + delim + str.substring((str.length - maxLength / 2) + 1);
 }
 
-class Express implements tlog.plugins.IPlugin {
+class Express {
 	tlog: TLog;
 	options;
 
-	constructor(tlog: TLog, options?: tlog.plugins.express.ExpressPluginOptions) {
+	constructor(tlog: TLog, options?: ExpressPluginOptions) {
 		this.tlog = tlog;
 		this.options = options ?? EXPRESS_DEFAULTS; // todo: merge with defaults
 	}

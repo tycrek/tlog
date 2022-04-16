@@ -1,17 +1,30 @@
-import { tlog } from '..';
 import { DEFAULTS, CHARS, TAB_SIZE, LOG } from './Constants';
+import Options from './Options';
 import { DateTime } from 'luxon';
 import { WriteStream } from 'tty';
 import { NextFunction, Request, Response } from 'express';
 import chalk from 'chalk';
 
 // Plugin imports
-import Process from './plugins/process';
 import Express from './plugins/express';
+import Process from './plugins/process';
+import ExpressPluginOptions from './plugins/ExpressPluginOptions';
+import ProcessPluginOptions from './plugins/ProcessPluginOptions';
+
+interface PluginEnabler {
+	express(options?: ExpressPluginOptions): TLog
+	process(options?: ProcessPluginOptions): TLog
+}
+
+export const DateTimePreset = DateTime;
 
 export function getChalk(colour: string): chalk.Chalk {
-	return Object(chalk).hasOwnProperty(colour) ? Object(chalk)[colour] : chalk.white;
+	let c = Object(chalk)[colour];
+	return c ? c : chalk.white;
+	// return Object(chalk).hasOwnProperty(colour) ? Object(chalk)[colour] : chalk.white;
 }
+
+export type Level = 'debug' | 'info' | 'warn' | 'error' | 'success' | 'utils';
 
 export class TLog {
 	private options = DEFAULTS;
@@ -40,9 +53,9 @@ export class TLog {
 	/**
 	 * Put together the final log message
 	 */
-	private write(level: tlog.Level, title = '', message = '', extra = ''): TLog {
+	private write(level: Level, title = '', message = '', extra = ''): TLog {
 		if (LOG.LEVELS[level] >= LOG.LEVELS[this.options.level])
-			(level === 'warn' || level === 'error' ? this.writeError : this.writeOut)(
+			(level === 'warn' || level === 'error' ? this.writeError : this.writeOut).call(this,
 				`${this.getTimestamp()}` +
 				`${this.getLabel(level)}` + CHARS.SPACE +
 				`${this.getTitle(level, title, message)}` +
@@ -77,7 +90,7 @@ export class TLog {
 	/**
 	 * Generate a log-ready label
 	 */
-	private getLabel(level: tlog.Level) {
+	private getLabel(level: Level) {
 		const label = this.options.label;
 		return label.enabled
 			? getPadding('right') + getChalk(LOG.COLOURS[level]).inverse(LOG.TITLES[level][label.case === 'upper' ? 'toUpperCase' : 'toLowerCase']()) + getPadding('left')
@@ -91,21 +104,21 @@ export class TLog {
 	/**
 	 * Generate a log-ready title
 	 */
-	private getTitle(level: tlog.Level, title: string, message: string) {
+	private getTitle(level: Level, title: string, message: string) {
 		return getChalk(LOG.COLOURS[level]).bold(message ? `${title}${this.options.title.delim}` : CHARS.EMPTY);
 	}
 
 	/**
 	 * Generate a log-ready message
 	 */
-	private getMessage(level: tlog.Level, title: string, message: string) {
+	private getMessage(level: Level, title: string, message: string) {
 		return getChalk(LOG.COLOURS[level])(message || title);
 	}
 
 	/**
 	 * Generate a log-ready extra
 	 */
-	private getExtra(level: tlog.Level, extra: string) {
+	private getExtra(level: Level, extra: string) {
 		return getChalk(LOG.COLOURS[level]).italic(extra ? `${CHARS.SPACE}${this.options.extra.prefix}${extra}${this.options.extra.suffix}` : CHARS.EMPTY);
 	}
 
@@ -117,7 +130,7 @@ export class TLog {
 		return this;
 	}
 
-	constructor(options: tlog.Options) {
+	constructor(options?: Options) {
 		// todo: idk if this will actually work
 		this.options = { ...DEFAULTS, ...options };
 	}
@@ -128,13 +141,13 @@ export class TLog {
 	}
 
 	//#region // * Plugins
-	public enable: tlog.plugins.IPluginEnabler = {
-		express: (options?: tlog.plugins.express.ExpressPluginOptions) => {
+	public enable: PluginEnabler = {
+		express: (options?: ExpressPluginOptions) => {
 			this.expressPlugin = new Express(this, options);
 			return this;
 		},
 
-		process: (options?: tlog.plugins.process.ProcessPluginOptions) => {
+		process: (options?: ProcessPluginOptions) => {
 			this.processPlugin = new Process(this, options);
 			this.processPlugin.listen();
 			return this;

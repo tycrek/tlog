@@ -1,18 +1,20 @@
 import { EOL } from 'os';
-import { tlog } from '..';
+import Options from './Options';
+import ExpressPluginOptions from './plugins/ExpressPluginOptions';
+import ProcessPluginOptions from './plugins/ProcessPluginOptions';
 
 export const TAB_SIZE = 4;
 
-export const CHARS: tlog.IChars = {
+export const CHARS = {
 	EOL,
 	ESCAPE: '\u001b',
 	EMPTY: '',
 	SPACE: ' '
 };
 
-export const DEFAULTS = new tlog.Options();
-export const EXPRESS_DEFAULTS = new tlog.plugins.express.ExpressPluginOptions();
-export const PROCESS_DEFAULTS = new tlog.plugins.process.ProcessPluginOptions();
+export const DEFAULTS = new Options();
+export const EXPRESS_DEFAULTS = new ExpressPluginOptions();
+export const PROCESS_DEFAULTS = new ProcessPluginOptions();
 
 export const LOG = {
 	LEVELS: {
