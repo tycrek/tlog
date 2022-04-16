@@ -13,6 +13,8 @@
     "test": "node test/test.js",
     "socket": "node socketClient.js",
     "demo": "node test/demo.js",
+    "prepublish": "npm run build",
+    "publish": "np --any-branch",
     "postpublish": "echo Make sure to update the README if any options changed!"
   },
   "repository": "github:tycrek/tlog",
