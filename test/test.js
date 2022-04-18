@@ -2,7 +2,14 @@
 const { TLog } = require('../dist/tlog');
 const logger = new TLog();
 // logger.info('hi');
-logger.info('hi?').error('yo', 'awesome').debug('hi', 'hello', 'hey');
+logger
+	.info('hi?')
+	.error('yo', 'awesome')
+	.debug('hi', 'hello', 'hey')
+	.blank()
+	.comment('Hellooo')
+	.cwd()
+	.epoch();
 
 /*
 //#region Configs
