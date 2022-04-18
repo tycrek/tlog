@@ -17,9 +17,6 @@
     "publish": "np --any-branch",
     "postpublish": "echo Make sure to update the README if any options changed!"
   },
-  "files": [
-    "./dist/"
-  ],
   "repository": "github:tycrek/tlog",
   "keywords": [
     "log",

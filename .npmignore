@@ -17,3 +17,6 @@ coverage
 #editor settings
 .idea
 .editorconfig
+
+# source
+src/
