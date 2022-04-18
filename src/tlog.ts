@@ -126,7 +126,7 @@ export class TLog {
 	 * Prints a utility log, with colours & formatting
 	 */
 	private utilLog(title: string, data: string, extra?: string) {
-		this.writeOut(this, this.getTimestamp(), this.getLabel('utils').concat(CHARS.SPACE), chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
+		this.writeOut(this.getTimestamp(), this.getLabel('utils').concat(CHARS.SPACE), chalk.white.bold(title).concat(data ? ': ' : CHARS.EMPTY, chalk.white(data || CHARS.EMPTY), chalk.grey(extra ? ` (${extra})` : CHARS.EMPTY)));
 		return this;
 	}
 
@@ -173,7 +173,7 @@ export class TLog {
 	 * A generic chainable log method. Acts like a console.log short-hand & with a timestamp (but using process.stdout)
 	 */
 	public log(...args: any[]) {
-		this.writeOut(this, this.getTimestamp(), ...args);
+		this.writeOut(this.getTimestamp(), ...args);
 		return this;
 	}
 
@@ -241,7 +241,7 @@ export class TLog {
 	 * Prints a formatted comment log message
 	 */
 	public comment(message: string) {
-		this.writeOut(this, getChalk(this.options.comments.colour)(`${this.options.comments.char} ${message}`));
+		this.writeOut(getChalk(this.options.comments.colour)(`${this.options.comments.char} ${message}`));
 		return this;
 	}
 
@@ -392,7 +392,7 @@ export class TLog {
 	 * Prints a blank line
 	 */
 	public blank() {
-		this.writeOut(this);
+		this.writeOut();
 		return this;
 	}
 
@@ -400,7 +400,7 @@ export class TLog {
 	 * Clears the console
 	 */
 	public clear() {
-		this.writeOut(this, `${CHARS.ESCAPE}[2J${CHARS.ESCAPE}[H`);
+		this.writeOut(`${CHARS.ESCAPE}[2J${CHARS.ESCAPE}[H`);
 		return this;
 	}
 }
