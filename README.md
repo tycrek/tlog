@@ -18,24 +18,24 @@ tlog
 # Features
 
 - 🌈 **Colours, timestamps, & labels**
+- ⌨️ **Developed using TypeScript**
 - 🔧 **Easily configurable:** just pass in an object with your custom settings
 - 🔗 **Method chaining:** useful for attaching quick debug logs to existing logs
-- ⚙ **Utility logs:** print short info snippets to aid debugging
+- ✂️ **Utility logs:** print short info snippets to aid debugging
 - 📝 **Comments:** comment your log outputs! I'm a little addicted to comments...
 - 🔌 **Plugins:** easily integrate pre-built loggers with existing code
 - 🚀 **No `console` wrapping:** Writes to `process.stdout` & `process.stderr`
 
-| Code | Result |
-| ---- | ------ |
-| ![demo code] | ![demo result] |
-
 # Installation
 
-Install using **`npm i @tycrek/log`**, then `require` in your project:
+Install using **`npm i @tycrek/log`**, then either `import` or `require` in your project:
 
 ```js
+import { TLog } from '@tycrek/log';
+// or
+const { TLog } = require('@tycrek/log');
+
 // Set up logger with default options
-const TLog = require('@tycrek/log');
 const logger = new TLog();
 ```
 
