@@ -18,10 +18,6 @@
   "license": "ISC",
   "bugs": "https://github.com/tycrek/tlog/issues",
   "homepage": "https://github.com/tycrek/tlog#readme",
-  "funding": {
-    "type": "patreon",
-    "url": "https://patreon.com/tycrek"
-  },
   "dependencies": {
     "chalk": "^4.1.1",
     "deepmerge": "^4.2.2",
