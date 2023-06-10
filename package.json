@@ -18,14 +18,13 @@
   "license": "ISC",
   "bugs": "https://github.com/tycrek/tlog/issues",
   "homepage": "https://github.com/tycrek/tlog#readme",
-  "dependencies": {
-    "chalk": "^4.1.1",
-    "deepmerge": "^4.2.2",
-    "luxon": "^1.27.0"
-  },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.4",
+    "@types/luxon": "^3.3.0",
+    "@types/node": "^20.3.0",
+    "chalk": "^5.2.0",
     "express": "^4.17.1",
+    "luxon": "^3.3.0",
     "typescript": "^5.1.3"
   }
 }
