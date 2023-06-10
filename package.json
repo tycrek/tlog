@@ -5,7 +5,7 @@
   "main": "dist/tlog.js",
   "scripts": {
     "postpublish": "echo Make sure to update the README if any options changed!",
-    "build": "rm -d dist/ & tsc"
+    "build": "rm -dr dist/ & tsc"
   },
   "repository": "github:tycrek/tlog",
   "keywords": [
