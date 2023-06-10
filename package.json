@@ -2,16 +2,10 @@
   "name": "@tycrek/log",
   "version": "0.5.9",
   "description": "tycrek's custom logger library",
-  "main": "tlog.js",
-  "engines": {
-    "node": ">=14.x.x",
-    "npm": ">=7.x.x"
-  },
+  "main": "dist/tlog.js",
   "scripts": {
-    "test": "node test/test.js",
-    "socket": "node socketClient.js",
-    "demo": "node test/demo.js",
-    "postpublish": "echo Make sure to update the README if any options changed!"
+    "postpublish": "echo Make sure to update the README if any options changed!",
+    "build": "rm -d dist/ & tsc"
   },
   "repository": "github:tycrek/tlog",
   "keywords": [
