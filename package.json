@@ -24,6 +24,8 @@
     "luxon": "^1.27.0"
   },
   "devDependencies": {
-    "express": "^4.17.1"
+    "@tsconfig/node16": "^1.0.4",
+    "express": "^4.17.1",
+    "typescript": "^5.1.3"
   }
 }
