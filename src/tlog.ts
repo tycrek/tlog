@@ -20,7 +20,7 @@ export class TLog {
 		// Set level
 		this.level = level;
 
-		// Standard options
+		// Standard option defaults
 
 		this.timestamp = {
 			enabled: true,
@@ -51,6 +51,8 @@ export class TLog {
 
 		this.debug('TLog initialized');
 	}
+
+	//#region // * Private methods
 
 	private getChalk(colour: string): Chalk.Chalk {
 		return typeof (this._chalk as any)[colour] === 'function'
@@ -107,6 +109,9 @@ export class TLog {
 		return this;
 	}
 
+	//#endregion
+	//#region // * Standard logging methods (public)
+
 	public debug(message: string): this;
 	public debug(title: string, message: string): this;
 	public debug(title: string, message: string, extra: string): this;
@@ -156,6 +161,9 @@ export class TLog {
 		return this.log('utils', title, message, extra);
 	}
 
+	//#endregion
+	//#region // * Special logging methods (public)
+
 	public comment(...args: any[]): this {
 		wout(this.getChalk(this.comments.colour)(`${this.comments.char} ${args.join(Chars.SPACE)}`));
 		return this;
@@ -175,4 +183,6 @@ export class TLog {
 		wout(`${Chars.ESCAPE}[2J${Chars.ESCAPE}[H`);
 		return this;
 	}
+
+	//#endregion
 }
