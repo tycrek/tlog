@@ -7,6 +7,9 @@
     "postpublish": "echo Make sure to update the README if any options changed!",
     "build": "rm -dr dist/ & tsc"
   },
+  "files": [
+    "dist"
+  ],
   "repository": "github:tycrek/tlog",
   "keywords": [
     "log",
