@@ -4,6 +4,7 @@ export const LOG = {
 		info: 200,
 		warn: 300,
 		error: 400,
+		fatal: 500,
 
 		success: 200,
 		utils: 100,
@@ -13,6 +14,7 @@ export const LOG = {
 		info: 'cyan',
 		warn: 'yellow',
 		error: 'red',
+		fatal: 'red',
 
 		success: 'green',
 		utils: 'grey',
@@ -22,6 +24,7 @@ export const LOG = {
 		info: '[INFO]',
 		warn: '[WARN]',
 		error: '[ERROR]',
+		fatal: '[FATAL]',
 
 		success: '[SUCCESS]',
 		utils: '[UTILS]',
@@ -31,6 +34,7 @@ export const LOG = {
 		info: '    ',
 		warn: '    ',
 		error: '   ',
+		fatal: '   ',
 
 		success: ' ',
 		utils: '   ',
