@@ -66,9 +66,10 @@ export class TLog {
 		const now = DateTime.local();
 		const usePreset = this.timestamp.preset !== undefined;
 
-		return this.getChalk(this.timestamp.colour!)(usePreset
+		return this.getChalk(this.timestamp.colour!)((usePreset
 			? now.toLocaleString(this.timestamp.preset)
-			: now.toFormat(this.timestamp.format!));
+			: now.toFormat(this.timestamp.format!))
+			.concat(Chars.SPACE));
 	}
 
 	private getLabel(level: Level): string {
@@ -100,7 +101,7 @@ export class TLog {
 	private log(level: Level, title: string, message?: string, extra?: string) {
 		if (LOG.LEVELS[level] >= LOG.LEVELS[this.level])
 			(LOG.LEVELS[level] >= LOG.LEVELS.warn ? werr : wout)(
-				this.getTimestamp(), Chars.SPACE,
+				this.getTimestamp(),
 				this.getLabel(level), Chars.SPACE,
 				this.getTitle(title, message),
 				this.getMessage(title, message),
