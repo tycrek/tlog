@@ -111,6 +111,39 @@ export class TLog {
 	}
 
 	//#endregion
+	//#region // * Option methods (public)
+
+	public setLevel(level: Level): this {
+		this.level = level;
+		return this;
+	}
+
+	public setTimestamp(timestamp: Partial<TLTimestamp>): this {
+		this.timestamp = { ...this.timestamp, ...timestamp };
+		return this;
+	}
+
+	public setLabel(label: Partial<TLLabel>): this {
+		this.label = { ...this.label, ...label };
+		return this;
+	}
+
+	public setTitle(title: Partial<TLTitle>): this {
+		this.title = { ...this.title, ...title };
+		return this;
+	}
+
+	public setExtra(extra: Partial<TLExtra>): this {
+		this.extra = { ...this.extra, ...extra };
+		return this;
+	}
+
+	public setComments(comments: Partial<TLComments>): this {
+		this.comments = { ...this.comments, ...comments };
+		return this;
+	}
+
+	//#endregion
 	//#region // * Standard logging methods (public)
 
 	public debug(message: string): this;
