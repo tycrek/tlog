@@ -57,23 +57,34 @@ export class TLog {
 			: this._chalk.white;
 	}
 
+	private getTimestamp(): string {
+		if (!this.timestamp.enabled) return Chars.EMPTY;
+
+		const now = DateTime.local();
+		const usePreset = this.timestamp.preset !== undefined;
+
+		return this.getChalk(this.timestamp.colour!)(usePreset
+			? now.toLocaleString(this.timestamp.preset)
+			: now.toFormat(this.timestamp.format!));
+	}
+
 	public debug(...args: any[]) {
-		wout(...args);
+		wout(this.getTimestamp(), ...args);
 	}
 
 	public info(...args: any[]) {
-		wout(...args);
+		wout(this.getTimestamp(), ...args);
 	}
 
 	public warn(...args: any[]) {
-		werr(...args);
+		werr(this.getTimestamp(), ...args);
 	}
 
 	public error(...args: any[]) {
-		werr(...args);
+		werr(this.getTimestamp(), ...args);
 	}
 
 	public fatal(...args: any[]) {
-		werr(...args);
+		werr(this.getTimestamp(), ...args);
 	}
 }
