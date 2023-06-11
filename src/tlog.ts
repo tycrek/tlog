@@ -218,5 +218,10 @@ export class TLog {
 		return this;
 	}
 
+	public callback(callback?: any): this {
+		if (callback && typeof callback === 'function') callback();
+		return this;
+	}
+
 	//#endregion
 }
