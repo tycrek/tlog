@@ -1,1 +1,1 @@
-export type Level = 'debug' | 'info' | 'warn' | 'error' | 'fatal';
+export type Level = 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'success' | 'utils';
