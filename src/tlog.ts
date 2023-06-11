@@ -24,7 +24,7 @@ export class TLog {
 		this.timestamp = {
 			enabled: true,
 			colour: 'grey',
-			preset: DateTime.DATETIME_FULL_WITH_SECONDS
+			preset: DateTime.DATETIME_SHORT_WITH_SECONDS
 		};
 
 		this.label = {
