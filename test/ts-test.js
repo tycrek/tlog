@@ -39,4 +39,5 @@ const log2 = new TLog('debug')
 log2.debug('Simple debug message')
 	.info('Simple info message')
 	.warn('Warning', 'TLog is super cool again')
-	.comment('But don\'t tell anyone.');
+	.comment('But don\'t tell anyone.')
+	.callback(() => console.log('This is a regular console.log in a callback.'));
