@@ -30,3 +30,13 @@ log.comment('This is a test comment.', 'Here is another argument.')
 	.basic('This is a test basic.', 'Here is another argument.')
 	.blank()
 	.comment('That was a blank line.');
+
+const log2 = new TLog('debug')
+	.setTimestamp({ enabled: false })
+	.setComments({ char: '👉' })
+	.setLabel({ case: 'lower', pad: false });
+
+log2.debug('Simple debug message')
+	.info('Simple info message')
+	.warn('Warning', 'TLog is super cool again')
+	.comment('But don\'t tell anyone.');
