@@ -1,9 +1,11 @@
-import { wout, werr } from './printer';
+import { wout, werr, Chars } from './printer';
 import { Level } from './Levels';
 import { TLTimestamp, TLLabel, TLTitle, TLExtra, TLComments } from './Options';
 import { DateTime } from 'luxon';
+import Chalk from 'chalk';
 
 export class TLog {
+	private _chalk: Chalk.Chalk;
 	private level: Level;
 	private timestamp: TLTimestamp;
 	private label: TLLabel;
@@ -12,7 +14,12 @@ export class TLog {
 	private comments: TLComments;
 
 	constructor(level: Level = 'info') {
+		this._chalk = new Chalk.Instance();
+
+		// Set level
 		this.level = level;
+
+		// Standard options
 
 		this.timestamp = {
 			enabled: true,
@@ -42,6 +49,12 @@ export class TLog {
 		};
 
 		this.debug('TLog initialized');
+	}
+
+	private getChalk(colour: string): Chalk.Chalk {
+		return typeof (this._chalk as any)[colour] === 'function'
+			? (this._chalk as any)[colour] as Chalk.Chalk
+			: this._chalk.white;
 	}
 
 	public debug(...args: any[]) {
