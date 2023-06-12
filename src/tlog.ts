@@ -86,8 +86,8 @@ export class TLog {
 		return `${getPadding('right')}${label}${getPadding('left')}`;
 	}
 
-	private getTitle(title: string, message?: string): string {
-		return this.getChalk(LOG.COLOURS[this.level]).bold(message ? `${title}${this.title.delim}` : Chars.EMPTY);
+	private getTitle(level: Level, title: string, message?: string): string {
+		return this.getChalk(LOG.COLOURS[level]).bold(message ? `${title}${this.title.delim}` : Chars.EMPTY);
 	}
 
 	private getMessage(title: string, message?: string): string {
@@ -103,7 +103,7 @@ export class TLog {
 			(LOG.LEVELS[level] >= LOG.LEVELS.warn ? werr : wout)(
 				this.getTimestamp(),
 				this.getLabel(level), Chars.SPACE,
-				this.getTitle(title, message),
+				this.getTitle(level, title, message),
 				this.getMessage(title, message),
 				this.getExtra(extra)
 			);
