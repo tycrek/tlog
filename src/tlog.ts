@@ -5,6 +5,8 @@ import { LOG } from './LOG';
 import { DateTime } from 'luxon';
 import Chalk from 'chalk';
 
+export const chalk = new Chalk.Instance();
+
 export class TLog {
 	private _chalk: Chalk.Chalk;
 	private level: Level;
