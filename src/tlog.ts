@@ -301,4 +301,25 @@ export class TLog {
 			next();
 		};
 	};
+
+	//#endregion
+	//#region // * Utility methods (public)
+
+	public epoch(): this {
+		return this.log('utils', { title: 'Epoch', message: `${Date.now().toString()}ms` });
+	}
+
+	public pid(): this {
+		return this.log('utils', { title: 'Process ID', message: `${process.pid}` });
+	}
+
+	public uptime(): this {
+		return this.log('utils', { title: 'Uptime', message: `${process.uptime().toString()}s` });
+	}
+
+	public cwd(): this {
+		return this.log('utils', { title: 'Current Working Directory', message: `${process.cwd()}` });
+	}
+
+	//#endregion
 }
