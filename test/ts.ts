@@ -41,3 +41,14 @@ log2.debug('Simple debug message')
 	.warn('Warning', 'TLog is super cool again')
 	.comment('But don\'t tell anyone.')
 	.callback(() => console.log('This is a regular console.log in a callback.'));
+
+/* Express test */
+//import express from 'express';
+const express = require('express');
+const app = express();
+
+const logExpress = new TLog('debug')
+
+app.use(logExpress.express());
+app.get('/', (req, res) => res.header('Content-Type', 'text/html').send('<h1>Hello World!</h1>'));
+app.listen(3000, () => logExpress.info('Example app listening on port 3000! Click http://localhost:3000/ to view.'));
