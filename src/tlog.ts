@@ -3,6 +3,7 @@ import { Level } from './Levels';
 import { TLTimestamp, TLLabel, TLTitle, TLExtra, TLComments } from './Options';
 import { LOG } from './LOG';
 import { DateTime } from 'luxon';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import Chalk from 'chalk';
 
 export const chalk = new Chalk.Instance();
@@ -74,7 +75,7 @@ export class TLog {
 			.concat(Chars.SPACE));
 	}
 
-	private getLabel(level: Level): string {
+	private getLabel(level: Level, chalk?: Chalk.Chalk): string {
 		if (!this.label.enabled) return Chars.EMPTY;
 
 		const getPadding = (align: 'left' | 'right') =>
@@ -88,8 +89,8 @@ export class TLog {
 		return `${getPadding('right')}${label}${getPadding('left')}`;
 	}
 
-	private getTitle(level: Level, title: string, message?: string): string {
-		return this.getChalk(LOG.COLOURS[level]).bold(message ? `${title}${this.title.delim}` : Chars.EMPTY);
+	private getTitle(level: Level, details: { title: string, message?: string, chalk?: Chalk.Chalk }): string {
+		return (details.chalk ?? this.getChalk(LOG.COLOURS[level])).bold(details.message ? `${details.title}${this.title.delim}` : Chars.EMPTY);
 	}
 
 	private getMessage(title: string, message?: string): string {
@@ -100,14 +101,14 @@ export class TLog {
 		return this.getChalk(LOG.COLOURS[this.level]).italic(extra ? `${Chars.SPACE}${this.extra.prefix}${extra}${this.extra.suffix}` : Chars.EMPTY);
 	}
 
-	private log(level: Level, title: string, message?: string, extra?: string) {
+	private log(level: Level, details: { title: string, message?: string, extra?: string, chalk?: Chalk.Chalk }): this {
 		if (LOG.LEVELS[level] >= LOG.LEVELS[this.level])
 			(LOG.LEVELS[level] >= LOG.LEVELS.warn ? werr : wout)(
 				this.getTimestamp(),
-				this.getLabel(level), Chars.SPACE,
-				this.getTitle(level, title, message),
-				this.getMessage(title, message),
-				this.getExtra(extra)
+				this.getLabel(level, chalk), Chars.SPACE,
+				this.getTitle(level, { ...details }),
+				this.getMessage(details.title, details.message),
+				this.getExtra(details.extra)
 			);
 		return this;
 	}
@@ -152,49 +153,49 @@ export class TLog {
 	public debug(title: string, message: string): this;
 	public debug(title: string, message: string, extra: string): this;
 	public debug(title: string, message?: string, extra?: string) {
-		return this.log('debug', title, message, extra);
+		return this.log('debug', { title, message, extra });
 	}
 
 	public info(message: string): this;
 	public info(title: string, message: string): this;
 	public info(title: string, message: string, extra: string): this;
 	public info(title: string, message?: string, extra?: string) {
-		return this.log('info', title, message, extra);
+		return this.log('info', { title, message, extra });
 	}
 
 	public warn(message: string): this;
 	public warn(title: string, message: string): this;
 	public warn(title: string, message: string, extra: string): this;
 	public warn(title: string, message?: string, extra?: string) {
-		return this.log('warn', title, message, extra);
+		return this.log('warn', { title, message, extra });
 	}
 
 	public error(message: string): this;
 	public error(title: string, message: string): this;
 	public error(title: string, message: string, extra: string): this;
 	public error(title: string, message?: string, extra?: string) {
-		return this.log('error', title, message, extra);
+		return this.log('error', { title, message, extra });
 	}
 
 	public fatal(message: string): this;
 	public fatal(title: string, message: string): this;
 	public fatal(title: string, message: string, extra: string): this;
 	public fatal(title: string, message?: string, extra?: string) {
-		return this.log('fatal', title, message, extra);
+		return this.log('fatal', { title, message, extra });
 	}
 
 	public success(message: string): this;
 	public success(title: string, message: string): this;
 	public success(title: string, message: string, extra: string): this;
 	public success(title: string, message?: string, extra?: string) {
-		return this.log('success', title, message, extra);
+		return this.log('success', { title, message, extra });
 	}
 
 	public utils(message: string): this;
 	public utils(title: string, message: string): this;
 	public utils(title: string, message: string, extra: string): this;
 	public utils(title: string, message?: string, extra?: string) {
-		return this.log('utils', title, message, extra);
+		return this.log('utils', { title, message, extra });
 	}
 
 	//#endregion
@@ -226,4 +227,78 @@ export class TLog {
 	}
 
 	//#endregion
+	//#region // * Express middleware (public)
+
+	/**
+	 * Returns an Express middleware function that logs requests in the standard tlog style
+	 */
+	public express(options?: {
+
+		/**
+		 * An array of paths to exclude from logging
+		 */
+		excludePaths?: string[];
+
+		/**
+		 * An array of methods to exclude from logging
+		 */
+		excludeMethods?: string[];
+
+		/**
+		 * Configures path trimming
+		 */
+		trimPaths?: false | {
+
+			/**
+			 * The maximum allowed length of a path before it is trimmed
+			 */
+			maxLength: number;
+
+			/**
+			 * The delimiter to use when trimming a path
+			 */
+			delimiter: string;
+
+		},
+
+		/**
+		 * Enables morgan mode, which logs requests in the morgan style. NOT FINISHED YET
+		 */
+		morganMode?: boolean;
+
+	}): RequestHandler {
+		const { excludePaths, excludeMethods, trimPaths, morganMode } = options || {};
+		const ExpressChalks = ['cyan', 'green', 'cyan', 'yellow', 'red'].map(colour => this.getChalk(colour));
+
+		/**
+		 * Trims the provided string to a certain length, adding a delimiter in the middle.
+		 */
+		const trimString = (str: string) => !options || !options.trimPaths || str.length < options.trimPaths.maxLength ? str
+			// ! The 3 concats are for readability. Deal with it.
+			: ''.concat(str.substring(0, (options.trimPaths.maxLength - options.trimPaths.delimiter.length) / 2))
+				.concat(options.trimPaths.delimiter)
+				.concat(str.substring((str.length - options.trimPaths.maxLength / 2) + 1));
+
+		return (req: Request, res: Response, next: NextFunction) => {
+
+			// Skip if request PATH or METHOD is excluded
+			if ((excludePaths && excludePaths.includes(req.path))
+				|| (excludeMethods && excludeMethods.includes(req.method))) return next();
+
+			// Begin timing
+			const start = process.hrtime()[1];
+
+			// Log on completion to get duration
+			res.on('finish', () =>
+				this.log('express' as Level, {
+					title: `HTTP ${req.method}`,
+					message: trimPaths ? trimString(req.path) : req.path,
+					extra: `${res.statusCode} ${res.statusMessage} (${(process.hrtime()[1] - start) / 1000000}ms)`,
+					chalk: ExpressChalks[Math.floor(res.statusCode / 100) - 1],
+				}));
+
+			// Call next middleware to avoid blocking
+			next();
+		};
+	};
 }

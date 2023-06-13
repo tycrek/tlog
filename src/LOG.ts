@@ -8,6 +8,8 @@ export const LOG = {
 
 		success: 200,
 		utils: 100,
+
+		express: 200,
 	},
 	COLOURS: {
 		debug: 'white',
@@ -18,6 +20,8 @@ export const LOG = {
 
 		success: 'green',
 		utils: 'grey',
+
+		express: 'green',
 	},
 	TITLES: {
 		debug: '[DEBUG]',
@@ -28,6 +32,8 @@ export const LOG = {
 
 		success: '[SUCCESS]',
 		utils: '[UTILS]',
+
+		express: '[EXPRESS]',
 	},
 	SPACES: {
 		debug: '   ',
@@ -38,5 +44,7 @@ export const LOG = {
 
 		success: ' ',
 		utils: '   ',
+
+		express: '  ',
 	}
 };
