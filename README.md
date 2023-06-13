@@ -67,6 +67,11 @@ You can configure TLog options with the following methods:
 | **`.setExtra({})`** | Sets the extra **prefix** & **suffix**. |
 | **`.setComments({})`** | Sets the comment **character** & **colour**. |
 
+Timestamps use [Luxon](https://moment.github.io/luxon/). To see what options are available for `timestamp.preset` & `timestamp.format`, review the Luxon documentation:
+
+- [Luxon presets](https://moment.github.io/luxon/docs/manual/formatting.html#presets)
+- [Luxon formats](https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens)
+
 ## General log methods
 
 ### `logger.[level](title, message?, extra?)`
