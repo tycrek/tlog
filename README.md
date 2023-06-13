@@ -117,6 +117,35 @@ Additional log levels are available for your convenience:
 | **`.clear()`** | Clears the console using Unicode escape sequences. May behave differently on different platforms. |
 | **`.callback(cb)`** | Calls the provided `cb` function. |
 
+## Express.js middleware
+
+TLog comes with an included Express middleware. To use it, simply import it & add it to your Express app:
+
+```ts
+import { TLog } from '@tycrek/log';
+import express from 'express';
+
+const logger = new TLog();
+const app = express();
+
+app.use(logger.express());
+app.get('/', (req, res) => res.send('Hello, world!'));
+app.listen(3000);
+```
+
+The middleware is still a bit of a work-in-progress following the TypeScript rewrite, but it should work fine for most use cases.
+
+You can configure the middleware with the following options:
+
+| Option | Description |
+| --- | --- |
+| **`excludePaths`** | An array of paths to exclude from logging. |
+| **`excludeMethods`** | An array of HTTP methods to exclude from logging. |
+| **`trimPaths`** | Must be either `false` or an Object. |
+| *`trimPaths.maxLength`* | Any paths longer than this will be trimmed. |
+| *`trimPaths.delimiter`* | The character to use to replace trimmed path segments. |
+| **`morganMode`** | Mimics the behaviour of [morgan](https://www.npmjs.com/package/morgan). **Not yet implemented.** |
+
 # 🍁 Colours.
 
 **Colours**. I am **Canadian**. It is **colours**. If you don't like it, go **fork** yourself.
