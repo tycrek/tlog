@@ -62,8 +62,6 @@ export class TLog {
 			char: '#',
 			colour: 'grey'
 		};
-
-		this.debug('TLog initialized');
 	}
 
 	//#region // * Private methods
