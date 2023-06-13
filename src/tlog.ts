@@ -6,8 +6,16 @@ import { DateTime } from 'luxon';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import Chalk from 'chalk';
 
+/**
+ * Chalk instance, in case you want to use it. 
+ * 
+ * **Please note:** tlog is using Chalk `4.1.2`, NOT Chalk `5.x.x`
+ */
 export const chalk = new Chalk.Instance();
 
+/**
+ * TLog class. Use with `new TLog()` to get started.
+ */
 export class TLog {
 	private _chalk: Chalk.Chalk;
 	private level: Level;
@@ -17,6 +25,9 @@ export class TLog {
 	private extra: TLExtra;
 	private comments: TLComments;
 
+	/**
+	 * Configure a new TLog instance. `level` is optional, defaulting to **`info`**.
+	 */
 	constructor(level: Level = 'info') {
 		this._chalk = new Chalk.Instance();
 
