@@ -56,4 +56,11 @@ const logExpress = new TLog('debug')
 
 app.use(logExpress.express());
 app.get('/', (req, res) => res.header('Content-Type', 'text/html').send('<h1>Hello World!</h1>'));
-app.listen(3000, () => logExpress.info('Example app listening on port 3000! Click http://localhost:3000/ to view.'));
+// app.listen(3000, () => logExpress.info('Example app listening on port 3000! Click http://localhost:3000/ to view.'));
+
+const und = undefined;
+const nul = null;
+const emp = '';
+log.info('Will it be blank 1 (und)', und);
+log.info('Will it be blank 2 (nul)', nul);
+log.info('Will it be blank 3 (emp)', emp);
