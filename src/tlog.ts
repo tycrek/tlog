@@ -99,7 +99,7 @@ export class TLog {
 	}
 
 	private getTitle(level: Level, details: { title: string, message?: string, chalk?: Chalk.Chalk }): string {
-		return (details.chalk ?? this.getChalk(LOG.COLOURS[level])).bold(details.message ? `${details.title}${this.title.delim}` : Chars.EMPTY);
+		return (details.chalk ?? this.getChalk(LOG.COLOURS[level])).bold(typeof details.message === 'string' ? `${details.title}${this.title.delim}` : Chars.EMPTY);
 	}
 
 	private getMessage(title: string, message?: string): string {
