@@ -3,6 +3,9 @@
   "version": "0.7.1",
   "description": "tycrek's custom logger library",
   "main": "dist/tlog.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "postpublish": "echo Make sure to update the README if any options changed!",
     "build": "rm -dr dist/ & tsc",
