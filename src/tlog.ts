@@ -290,6 +290,9 @@ export class TLog {
 
 		return (req: Request, res: Response, next: NextFunction) => {
 
+			// Get the original path (required as path gets malformed when using Routers)
+			const originalPath = req.path;
+
 			// Skip if request PATH or METHOD is excluded
 			if ((excludePaths && excludePaths.includes(req.path))
 				|| (excludeMethods && excludeMethods.includes(req.method))) return next();
@@ -301,7 +304,7 @@ export class TLog {
 			res.on('finish', () =>
 				this.log('express' as Level, {
 					title: `HTTP ${req.method}`,
-					message: trimPaths ? trimString(req.path) : req.path,
+					message: trimPaths ? trimString(originalPath) : originalPath,
 					extra: `${res.statusCode} ${res.statusMessage} (${(process.hrtime()[1] - start) / 1000000}ms)`,
 					chalk: ExpressChalks[Math.floor(res.statusCode / 100) - 1],
 				}));
