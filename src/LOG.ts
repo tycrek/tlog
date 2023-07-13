@@ -64,6 +64,6 @@ export const LOG = {
 		success: ' ',
 		utils: '   ',
 
-		express: '  ',
+		express: ' ',
 	}
 };
