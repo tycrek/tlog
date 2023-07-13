@@ -1,6 +1,6 @@
 {
   "name": "@tycrek/log",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "tycrek's custom logger library",
   "main": "dist/tlog.js",
   "engines": {
